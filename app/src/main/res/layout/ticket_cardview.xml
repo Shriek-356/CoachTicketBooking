@@ -1,0 +1,73 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20sp"
+    android:elevation="8dp"
+    android:layout_gravity="center">
+
+    <!-- LinearLayout để bố trí các thành phần -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ticket_background"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- ImageView: Hiển thị ảnh vé -->
+        <ImageView
+            android:id="@+id/img_ticket"
+            android:layout_width="107dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Hình ảnh vé xe"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ticketicon" />
+
+        <!-- Thông tin vé -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Tên vé -->
+            <TextView
+                android:id="@+id/text_ticket_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Vé xe Hà Nội - Đà Nẵng"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <!-- Địa điểm xuất phát và điểm đến -->
+            <TextView
+                android:id="@+id/text_route"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Hà Nội -> Đà Nẵng"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
+
+            <!-- Thời gian bắt đầu -->
+
+            <!-- Giá vé -->
+            <TextView
+                android:id="@+id/text_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="500,000 VND"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
