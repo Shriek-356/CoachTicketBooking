@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textCoachBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Coach Brand"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textTotalSeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Seat"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textLicensePlate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="License Plate"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Type"
+        android:textSize="16sp" />
+</LinearLayout>

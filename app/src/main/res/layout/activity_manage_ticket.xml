@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.ManageTicket"
+    android:background="@drawable/registerbackground">
+
+    <Button
+        android:id="@+id/btnThoat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/material_on_background_disabled"
+        android:drawableLeft="@drawable/baseline_arrow_back_24_black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="THỐNG KÊ VÉ"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:layout_marginTop="150dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp">
+
+        <Button
+            android:id="@+id/btnveuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Thống kê user đặt vé"
+            android:gravity="start"
+            android:background="@color/material_dynamic_primary70"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+        <Button
+            android:id="@+id/btnvengaythang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="thống kê vé đặt theo ngày, tháng"
+            android:gravity="start"
+            android:background="@color/material_dynamic_primary70"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+
+        <Button
+            android:id="@+id/btnvechuyen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="thống kê vé theo từng chuyến xe"
+            android:gravity="start"
+            android:background="@color/material_dynamic_primary70"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+
+
+</LinearLayout>
+</LinearLayout>

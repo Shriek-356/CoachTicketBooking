@@ -1,0 +1,20 @@
+<!-- res/drawable/gradient_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Lớp Gradient Nền -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#4CAF50"
+            android:endColor="#2196F3"
+            android:orientation="vertical"/>
+        </shape>
+    </item>
+
+    <!-- Lớp Họa Tiết Chấm Bi -->
+    <item>
+        <bitmap
+            android:tileMode="repeat"
+            android:alpha="0.1"/> <!-- Độ trong suốt của họa tiết -->
+    </item>
+</layer-list>
