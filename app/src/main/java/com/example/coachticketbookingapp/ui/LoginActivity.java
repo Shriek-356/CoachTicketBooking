@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         MyDataBase mydb = new MyDataBase(this);
         mydb.open();//Hieu don gian la tao csdl neu chua ton tai
 
+        //SQLiteDatabase db = mydb.getWritableDatabase();
         Date currentDateObj = new Date();  // Lấy thời gian hiện tại
 
         // Chuyển đổi thời gian thành chuỗi theo định dạng dd/MM/yyyy

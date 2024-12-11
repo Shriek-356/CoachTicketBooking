@@ -31,7 +31,6 @@ public class TripListFoundActivity extends AppCompatActivity {
             @Override
             public void onItemClick(TripInfo tripInfo) {
                 // Xử lý sự kiện click vào item
-
                 Intent intent = new Intent(TripListFoundActivity.this, TripListFoundDetailsActivity.class);
                 intent.putExtra("trip", tripInfo);
                 startActivity(intent);

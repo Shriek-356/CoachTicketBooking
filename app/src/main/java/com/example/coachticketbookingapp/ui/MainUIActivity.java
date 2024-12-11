@@ -44,6 +44,8 @@ public class MainUIActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putSerializable("user",presentUser);
             homePageFragment.setArguments(bundle);
+            myTicketFragment.setArguments(bundle);
+            //Truyen user qua myTicketFragment
         }
         replaceFragment(homePageFragment);//Dat mac dinh la homepage
     }

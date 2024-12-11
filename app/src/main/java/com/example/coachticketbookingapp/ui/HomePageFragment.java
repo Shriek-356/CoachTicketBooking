@@ -148,7 +148,6 @@ public class HomePageFragment extends Fragment {
                 Intent intent = new Intent (getActivity(), TripListFoundActivity.class);
                 intent.putExtra("dsTrip", (Serializable) dsTrip);
                 startActivity(intent);
-
             }
 
         });
