@@ -23,6 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnThemGioHang"
+                android:layout_width="162dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/buttonui"
+                android:text="Thêm Vào Giò Hàng"
+                android:textColor="@color/material_dynamic_neutral10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
                 android:id="@+id/textView47"
                 android:layout_width="wrap_content"
@@ -196,10 +208,10 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDatVe"
-                android:layout_width="180dp"
+                android:layout_width="134dp"
                 android:layout_height="49dp"
-                android:layout_marginStart="96dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginStart="208dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/buttonui"
                 android:text="Đặt Vé"
                 app:layout_constraintBottom_toBottomOf="parent"

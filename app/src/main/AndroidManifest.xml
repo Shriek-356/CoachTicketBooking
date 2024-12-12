@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CoachTicketBookingApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.BookingUserInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.MyTicketDetailsActivity"
             android:exported="false" />
         <activity

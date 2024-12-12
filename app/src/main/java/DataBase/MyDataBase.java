@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.coachticketbookingapp.Object.TripBookingDetails;
 import com.example.coachticketbookingapp.Object.TripInfo;
+import com.example.coachticketbookingapp.Object.TrippingCart;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.ui.BusTripInfo;
 import com.example.coachticketbookingapp.ui.CoachTripInfo;
@@ -22,7 +23,7 @@ import java.util.List;
 public class MyDataBase extends SQLiteOpenHelper {
 
     private static String dbName = "CoachTicketBookingDB.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
     // Table
 
     // User
@@ -91,12 +92,12 @@ public class MyDataBase extends SQLiteOpenHelper {
     public static String tbTripBookingDetails_BookingDate = "BookingDate";
     public static String tbTripBookingDetails_TicketQuantity = "TicketQuantity";
     public static String tbTripBookingDetails_TotalPrice = "TotalPrice";
-
+    public static String tbTripBookingDetails_FullName ="FullName";
+    public static String tbTripBookingDetails_PhoneNumber ="PhoneNumber";
+    public static String tbTripBookingDetails_Email ="Email";
     public MyDataBase(Context context) {
         super(context, dbName, null, DATABASE_VERSION);
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -150,13 +151,16 @@ public class MyDataBase extends SQLiteOpenHelper {
                 + tbTripBookingDetails_BookingDate + " DATETIME, "
                 + tbTripBookingDetails_TicketQuantity + " INTEGER, "
                 + tbTripBookingDetails_TotalPrice + " DOUBLE, "
+                + tbTripBookingDetails_FullName + "TEXT, "
+                + tbTripBookingDetails_PhoneNumber + "TEXT, "
+                + tbTripBookingDetails_Email + "TEXT, "
                 + "FOREIGN KEY (" + tbTripBookingDetails_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
                 + "FOREIGN KEY (" + tbTripBookingDetails_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
                 + ")";
 
         // Tạo bảng TrippingCart
         String tbTrippingCartString = "CREATE TABLE " + tbTrippingCart + " ( "
-                + tbTrippingCart_CartId + " TEXT PRIMARY KEY, "
+                + tbTrippingCart_CartId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + tbTrippingCart_UserId + " INTEGER, "
                 + tbTrippingCart_BookingDate + " DATETIME, "
                 + tbTrippingCart_TripId + " INTEGER, "
@@ -210,8 +214,19 @@ public class MyDataBase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);  // Tạo lại các bảng mới
         */
         if (oldVersion < DATABASE_VERSION) {
-            sqLiteDatabase.execSQL("ALTER TABLE " + tbTrippingCart + " ADD COLUMN " + tbTrippingCart_TicketQuantity + " INTEGER");
-            sqLiteDatabase.execSQL("ALTER TABLE " + tbTrippingCart + " ADD COLUMN " + tbTrippingCart_TotalPrice + " DOUBLE");
+            //sqLiteDatabase.execSQL("ALTER TABLE " + tbTripBookingDetails + " ADD COLUMN " + tbTripBookingDetails_FullName + " INTEGER");
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tbTrippingCart);
+            String tbTrippingCartString = "CREATE TABLE " + tbTrippingCart + " ( "
+                    + tbTrippingCart_CartId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + tbTrippingCart_UserId + " INTEGER, "
+                    + tbTrippingCart_BookingDate + " DATETIME, "
+                    + tbTrippingCart_TripId + " INTEGER, "
+                    + tbTrippingCart_TicketQuantity + " INTEGER, "
+                    + tbTrippingCart_TotalPrice + " DOUBLE, "
+                    + "FOREIGN KEY (" + tbTrippingCart_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
+                    + "FOREIGN KEY (" + tbTrippingCart_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
+                    + ")";
+            sqLiteDatabase.execSQL(tbTrippingCartString);
         }
     }
 
@@ -278,17 +293,21 @@ public class MyDataBase extends SQLiteOpenHelper {
         return exists;
     }
 
-    public void addTripBookingDetails(int userId, int tripId, String bookingDate, int ticketQuantity, double totalPrice){
-
+    //Ham them thong tin ve khi nguoi dung dat ve;
+    public void addTripBookingDetails(int userId, int tripId, String bookingDate, int ticketQuantity, double totalPrice,String fullName, String phoneNumber,String email){
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
         contentValues.put(tbTripBookingDetails_UserId,userId);
         contentValues.put(tbTripBookingDetails_TripId,tripId);
         contentValues.put(tbTripBookingDetails_BookingDate,bookingDate);
         contentValues.put(tbTripBookingDetails_TicketQuantity,ticketQuantity);
         contentValues.put(tbTripBookingDetails_TotalPrice,totalPrice);
+        contentValues.put(tbTripBookingDetails_FullName,fullName);
+        contentValues.put(tbTripBookingDetails_PhoneNumber,phoneNumber);
+        contentValues.put(tbTripBookingDetails_Email,email);
         db.insert(tbTripBookingDetails,null,contentValues);
+
+        db.close();
     }
 
 
@@ -1007,7 +1026,169 @@ public class MyDataBase extends SQLiteOpenHelper {
         }
 
         cursor.close();
+        db.close();
         return list;
+    }
+
+    public boolean addTrippingCart(int userID, String bookingDate, int tripID, int ticketQuantity, double totalPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(tbTrippingCart_UserId, userID);
+        values.put(tbTrippingCart_BookingDate, bookingDate);
+        values.put(tbTrippingCart_TripId, tripID);
+        values.put(tbTrippingCart_TicketQuantity, ticketQuantity);
+        values.put(tbTrippingCart_TotalPrice, totalPrice);
+
+        // Kiểm tra kết quả của db.insert, nếu trả về -1 thì không thành công, nếu khác -1 thì thành công
+        long result = db.insert(tbTrippingCart, null, values);
+        db.close();
+
+        return result != -1;  // Nếu result != -1 thì trả về true, ngược lại là false
+    }
+
+    //Ham kiem tra xem loai ve do da co trong gio hang hay chua
+    public boolean isTrippingCartExists(int tripID, int userID){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + tbTrippingCart
+                + " WHERE " + tbTrippingCart_TripId + " = ? AND " + tbTrippingCart_UserId + " = ? ";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tripID),String.valueOf(userID)});
+
+        if(cursor!=null&&cursor.getCount()>0){
+            cursor.close();
+            return true;
+        }
+
+        cursor.close();
+        return false;
+    }
+
+    public void updateTrippingCart(int tripID, int userID, int ticketQuantity, double totalPrice){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(tbTrippingCart_TicketQuantity,ticketQuantity);
+        values.put(tbTrippingCart_TotalPrice,totalPrice);
+
+        db.update(tbTrippingCart,values,tbTrippingCart_TripId + " = ? AND " + tbTrippingCart_UserId + " = ? ",new String[]{String.valueOf(tripID),String.valueOf(userID)});
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public TrippingCart getTrippingCart(int tripID, int userID){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * "
+                + " FROM " +tbTrippingCart
+                + " WHERE " + tbTrippingCart_TripId + " = ? AND " + tbTrippingCart_UserId + " = ? ";
+
+        Cursor cursor = db.rawQuery(query,new String[]{String.valueOf(tripID),String.valueOf(userID)});
+
+        if(cursor!=null&&cursor.moveToFirst()){
+                 int tripId = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_TripId));
+                 int userId = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_UserId));
+                 int ticketQuantity = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_TicketQuantity));
+                 double totalPrice = cursor.getDouble(cursor.getColumnIndex(tbTrippingCart_TotalPrice));
+                 TrippingCart trippingCart = new TrippingCart(userId,null,tripId,ticketQuantity,totalPrice);
+                 db.close();
+                 return trippingCart;
+        }
+        db.close();
+        return null;
+    }
+
+    @SuppressLint("Range")
+    public TripInfo getTripInfo(int tripID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Định nghĩa câu truy vấn SQL để lấy thông tin chuyến đi theo tripID
+        String query = "SELECT * FROM " + tbTripInfo + " WHERE " + tbTripInfo_TripId + " = ?";
+
+        // Thực hiện câu truy vấn
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tripID)});
+
+        // Kiểm tra nếu có dữ liệu trả về
+        if (cursor != null && cursor.moveToFirst()) {
+            // Lấy thông tin từ cursor và tạo đối tượng TripInfo
+            int coachID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_CoachID));
+            String firstLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_FirstLocation));
+            String secondLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_SecondLocation));
+            String departure = cursor.getString(cursor.getColumnIndex(tbTripInfo_Departure));
+            String destination = cursor.getString(cursor.getColumnIndex(tbTripInfo_Destination));
+            String departureTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureTime));
+            String departureDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureDate));
+            String destinationTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationTime));
+            String destinationDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationDate));
+            int ticketAvailable = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TicketAvailable));
+            double price = cursor.getDouble(cursor.getColumnIndex(tbTripInfo_Price));
+            int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
+
+            // Tạo đối tượng TripInfo với dữ liệu vừa lấy
+            TripInfo tripInfo = new TripInfo(
+                    tripID,
+                    coachID,
+                    firstLocation,
+                    secondLocation,
+                    departure,
+                    destination,
+                    departureTime,
+                    departureDate,
+                    destinationTime,
+                    destinationDate,
+                    ticketAvailable,
+                    price,
+                    distance
+            );
+
+            cursor.close(); // Đóng cursor
+            db.close(); // Đóng database
+            return tripInfo; // Trả về đối tượng TripInfo
+        }
+        // Nếu không có dữ liệu
+        cursor.close();
+        db.close();
+        return null; // Trả về null nếu không tìm thấy chuyến đi
+    }
+
+    @SuppressLint("Range")
+    public List<TrippingCart> getTrippingCartList(int userID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<TrippingCart> cartList = new ArrayList<>();
+
+        // Định nghĩa câu truy vấn SQL để lấy tất cả các giỏ hàng của một người dùng
+        String query = "SELECT * FROM " + tbTrippingCart + " WHERE " + tbTrippingCart_UserId + " = ?";
+
+        // Thực hiện câu truy vấn và trả về cursor
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userID)});
+
+        // Kiểm tra nếu có dữ liệu trả về
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // Lấy thông tin từ cursor và tạo đối tượng TrippingCart
+                int cartID = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_CartId));
+                String bookingDate = cursor.getString(cursor.getColumnIndex(tbTrippingCart_BookingDate));
+                int tripID = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_TripId));
+                int ticketQuantity = cursor.getInt(cursor.getColumnIndex(tbTrippingCart_TicketQuantity));
+                double totalPrice = cursor.getDouble(cursor.getColumnIndex(tbTrippingCart_TotalPrice));
+
+                // Tạo đối tượng TrippingCart với dữ liệu vừa lấy
+                TrippingCart trippingCart = new TrippingCart(userID, bookingDate, tripID, ticketQuantity, totalPrice);
+
+                // Thêm đối tượng vào danh sách
+                cartList.add(trippingCart);
+            } while (cursor.moveToNext()); // Lặp qua tất cả các bản ghi
+        }
+
+        // Đóng cursor và database
+        cursor.close();
+        db.close();
+
+        // Trả về danh sách các giỏ hàng
+        return cartList;
     }
 }
 

@@ -1,0 +1,142 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20sp"
+    android:elevation="8dp"
+    android:layout_gravity="center">
+
+    <!-- ConstraintLayout để bố trí các thành phần -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:padding="16dp">
+
+        <!-- ImageView: Hiển thị ảnh vé -->
+
+        <!-- Thông tin vé -->
+
+        <ImageView
+            android:id="@+id/img_ticket"
+            android:layout_width="107dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="Hình ảnh vé xe"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ticketicon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_ticket"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Tên vé -->
+            <TextView
+                android:id="@+id/txvCartLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Vé xe Hà Nội - Đà Nẵng"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <!-- Địa điểm xuất phát và điểm đến -->
+            <TextView
+                android:id="@+id/txvCartFromTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Hà Nội -> Đà Nẵng"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="16sp" />
+
+            <!-- Giá vé -->
+            <TextView
+                android:id="@+id/txvCartPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="500,000 VND"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <!-- Tăng giảm số lượng vé -->
+        <LinearLayout
+            android:id="@+id/layoutQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <!-- Button giảm -->
+
+            <!-- TextView để hiển thị số lượng vé -->
+
+            <!-- Button tăng -->
+        </LinearLayout>
+
+        <!-- Button Đặt vé -->
+
+        <Button
+            android:id="@+id/btnDecrease"
+            android:layout_width="57dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="24dp"
+            android:text="-"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_ticket" />
+
+        <TextView
+            android:id="@+id/txvCartTicketQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="36dp"
+            android:text="1"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/btnDecrease"
+            app:layout_constraintTop_toBottomOf="@+id/img_ticket" />
+
+        <Button
+            android:id="@+id/btnIncrease"
+            android:layout_width="63dp"
+            android:layout_height="40dp"
+            android:text="+"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_ticket"
+            app:layout_constraintVertical_bias="0.75"
+            tools:layout_editor_absoluteX="118dp" />
+
+        <Button
+            android:id="@+id/btnCartDatVe"
+            android:layout_width="149dp"
+            android:layout_height="45dp"
+            android:background="@drawable/buttonui"
+            android:text="Đặt Vé"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="0.875"
+            tools:layout_editor_absoluteX="213dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,11 +13,8 @@ import com.example.coachticketbookingapp.Object.TripInfo;
 import com.example.coachticketbookingapp.R;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import com.example.coachticketbookingapp.Object.Ticket;
 
 public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdapter.TripListFoundViewHolder>  {
     private Context mContext;
@@ -96,8 +91,8 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
         txvEndTime = itemView.findViewById(R.id.txvEndTime);
         txvDeparture = itemView.findViewById(R.id.txvDeparture);
         txvDestination = itemView.findViewById(R.id.txvDestination);
-        txvPrice = itemView.findViewById(R.id.txvPrice);
-        txvLocation = itemView.findViewById(R.id.txvLocation);
+        txvPrice = itemView.findViewById(R.id.txvCartPrice);
+        txvLocation = itemView.findViewById(R.id.txvCartLocation);
     }
   }
 }

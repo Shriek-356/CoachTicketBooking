@@ -73,9 +73,9 @@ public class TripBookingDetailsAdapter extends RecyclerView.Adapter<TripBookingD
 
         public TripBookingDetailsViewHolder(@NonNull View itemView) {
             super(itemView);
-            txvLocation = itemView.findViewById(R.id.txvLocation);
-            txvFromTo = itemView.findViewById(R.id.txvFromTo);
-            txvPrice = itemView.findViewById(R.id.txvPrice);
+            txvLocation = itemView.findViewById(R.id.txvCartLocation);
+            txvFromTo = itemView.findViewById(R.id.txvCartFromTo);
+            txvPrice = itemView.findViewById(R.id.txvCartPrice);
         }
     }
 }

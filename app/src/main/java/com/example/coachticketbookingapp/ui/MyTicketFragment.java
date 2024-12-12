@@ -12,12 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.coachticketbookingapp.Object.TripBookingDetails;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
-import com.example.coachticketbookingapp.Object.Ticket;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class MyTicketFragment extends Fragment implements TripBookingDetailsAdap
 
         dsTicket = myDataBase.getTripBookingList(myTicketFragmentUser.getUserID());
         TripBookingDetailsAdapter tripBookingDetailsAdapter = new TripBookingDetailsAdapter(getContext(),dsTicket,this);
-        recyclerView = view_ticket.findViewById(R.id.recycleview_trip_list_found);
+        recyclerView = view_ticket.findViewById(R.id.recycleview_cart_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);//Dieu chinh cach hien thi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(tripBookingDetailsAdapter);

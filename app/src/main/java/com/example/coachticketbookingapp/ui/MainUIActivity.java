@@ -21,6 +21,7 @@ public class MainUIActivity extends AppCompatActivity {
     private HomePageFragment homePageFragment = new HomePageFragment();
     private MyTicketFragment myTicketFragment = new MyTicketFragment();
     private MyAccountFragment myAccountFragment=new MyAccountFragment();
+    private MyCartFragment myCartFragment = new MyCartFragment();
 
     //Ham thay the fragment
     public void replaceFragment(Fragment fragment){
@@ -45,7 +46,8 @@ public class MainUIActivity extends AppCompatActivity {
             bundle.putSerializable("user",presentUser);
             homePageFragment.setArguments(bundle);
             myTicketFragment.setArguments(bundle);
-            //Truyen user qua myTicketFragment
+            myCartFragment.setArguments(bundle);
+
         }
         replaceFragment(homePageFragment);//Dat mac dinh la homepage
     }
@@ -59,8 +61,8 @@ public class MainUIActivity extends AppCompatActivity {
             else if(item.getItemId()==R.id.my_ticket){
                 replaceFragment(myTicketFragment);
             }
-            else if(item.getItemId()==R.id.notification){
-                replaceFragment(new NotificationFragment( ));
+            else if(item.getItemId()==R.id.my_cart){
+                replaceFragment(myCartFragment);
             }
             else if(item.getItemId()==R.id.my_account){
                 replaceFragment(myAccountFragment);

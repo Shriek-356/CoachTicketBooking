@@ -8,10 +8,10 @@
         android:id="@+id/my_ticket"
         android:icon="@drawable/baseline_ticket_2_24"
         />
-    <item android:title="Thông Báo"
-        android:id="@+id/notification"
+    <item
+        android:id="@+id/my_cart"
         android:icon="@drawable/baseline_notifications_24"
-        />
+        android:title="Giỏ Hàng" />
     <item android:title="Tài Khoản"
         android:id="@+id/my_account"
         android:icon="@drawable/baseline_account_circle_24"

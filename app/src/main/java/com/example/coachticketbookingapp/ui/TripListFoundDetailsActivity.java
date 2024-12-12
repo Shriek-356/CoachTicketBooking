@@ -14,20 +14,30 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coachticketbookingapp.Object.TripInfo;
+import com.example.coachticketbookingapp.Object.TrippingCart;
+import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+
+import DataBase.MyDataBase;
 
 public class TripListFoundDetailsActivity extends AppCompatActivity {
     private TripInfo tripInfoo;
     private TextView txvDiemBatDau, txvDiemDen, txvGioKhoiHanh, txvGioKetThuc, txvDiemDon, txvDiemTra, txvSoChoTrong, txvGiaTien;
     private Button btnDatVe;
+    private User thisUser;
+    private MyDataBase myDataBase;
+    private Button btnThemVaoGioHang;
+    private TrippingCart trippingCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_list_found_details);
-
+        myDataBase = new MyDataBase(this);
         txvDiemBatDau = findViewById(R.id.txvDiemBatDau);
         txvDiemDen = findViewById(R.id.txvDiemDen);
         txvGioKhoiHanh = findViewById(R.id.txvGioKhoiHanh);
@@ -37,8 +47,10 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         txvSoChoTrong = findViewById(R.id.txvSoChoTrong);
         txvGiaTien = findViewById(R.id.txvGiaTien);
         btnDatVe = findViewById(R.id.btnDatVe);
+        btnThemVaoGioHang = findViewById(R.id.btnThemGioHang);
 
         Intent intent = getIntent();
+        thisUser =(User) intent.getSerializableExtra("thisuser");
         tripInfoo = (TripInfo) intent.getSerializableExtra("trip");
          if(tripInfoo != null){
             txvDiemBatDau.setText(tripInfoo.getDeparture());
@@ -55,8 +67,43 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         btnDatVe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Intent intentpayment = new Intent(TripListFoundDetailsActivity.this, PaymentMethodActivity.class);
-               startActivity(intentpayment);
+
+               Intent intentTypeInfo = new Intent(TripListFoundDetailsActivity.this, BookingUserInfoActivity.class);
+               intentTypeInfo.putExtra("tripinfoo",tripInfoo);
+               intentTypeInfo.putExtra("userr",thisUser);
+               startActivity(intentTypeInfo);
+            }
+        });
+
+        btnThemVaoGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isExist = myDataBase.isTrippingCartExists(tripInfoo.getTripID(), thisUser.getUserID());
+                if(isExist){
+                    // Nếu giỏ hàng đã tồn tại, cập nhật số lượng vé và giá tiền
+                    trippingCart = myDataBase.getTrippingCart(tripInfoo.getTripID(), thisUser.getUserID());
+                    if(trippingCart != null){
+                        int quantity = trippingCart.getTicketQuantity() + 1;
+                        double price = tripInfoo.getPrice() * quantity;
+                        myDataBase.updateTrippingCart(trippingCart.getTripID(), thisUser.getUserID(), quantity, price);
+                        Toast.makeText(getApplicationContext(), "Đã cập nhật vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+                    // Nếu giỏ hàng chưa tồn tại, tạo mới giỏ hàng
+                    Date currentDateObj = new Date();  // Lấy thời gian hiện tại
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    String currentDate = sdf.format(currentDateObj);
+
+                    boolean isAdded = myDataBase.addTrippingCart(thisUser.getUserID(), currentDate, tripInfoo.getTripID(), 1, tripInfoo.getPrice());
+
+                    if(isAdded) {
+                        Toast.makeText(getApplicationContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Lỗi khi thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }

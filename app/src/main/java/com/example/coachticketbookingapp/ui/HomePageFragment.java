@@ -98,9 +98,7 @@ public class HomePageFragment extends Fragment {
         recyclerView.setAdapter(itemAdapter);
 
         //Nhan object user tu activity;
-
         Bundle bundle = getArguments();
-
         if(bundle!=null){
             thisUser = (User) bundle.getSerializable("user");
             if(thisUser!=null){
@@ -143,9 +141,9 @@ public class HomePageFragment extends Fragment {
                 String ngayDi = editTextNgayDi.getText().toString().trim();
                 dsTrip= myDataBase.FoundTrip(noiXuatPhat,noiDen,ngayDi);
 
-                //Truyen dsTrip
-
+                //Truyen dsTrip va User
                 Intent intent = new Intent (getActivity(), TripListFoundActivity.class);
+                intent.putExtra("thisuser",thisUser);
                 intent.putExtra("dsTrip", (Serializable) dsTrip);
                 startActivity(intent);
             }
@@ -180,7 +178,7 @@ public class HomePageFragment extends Fragment {
 
     private List<String> getProvincesList() {
         return Arrays.asList(
-                "Hà Nội", "TP Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ",
+                "Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ",
                 "Vũng Tàu", "Quảng Ninh", "Lào Cai", "Lâm Đồng", "Khánh Hòa",
                 "Bình Dương", "Đồng Nai", "Nghệ An", "Thanh Hóa", "Thừa Thiên - Huế",
                 "Quảng Nam", "Quảng Ngãi", "Bình Thuận", "Kiên Giang", "Hà Giang",

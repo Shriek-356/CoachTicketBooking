@@ -34,7 +34,7 @@
 
             <!-- Tên vé -->
             <TextView
-                android:id="@+id/txvLocation"
+                android:id="@+id/txvCartLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
@@ -44,7 +44,7 @@
 
             <!-- Địa điểm xuất phát và điểm đến -->
             <TextView
-                android:id="@+id/txvFromTo"
+                android:id="@+id/txvCartFromTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -57,7 +57,7 @@
 
             <!-- Giá vé -->
             <TextView
-                android:id="@+id/txvPrice"
+                android:id="@+id/txvCartPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

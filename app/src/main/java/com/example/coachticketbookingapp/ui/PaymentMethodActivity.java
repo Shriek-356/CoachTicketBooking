@@ -17,10 +17,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coachticketbookingapp.Api.CreateOrder;
+import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
 import com.example.coachticketbookingapp.R;
 
 import org.json.JSONObject;
 
+import DataBase.MyDataBase;
 import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
@@ -31,16 +33,22 @@ public class PaymentMethodActivity extends AppCompatActivity {
     private Button btnThanhToanZl;
     private Button btnThanhToanTrucTiep;
     private double total=100000;
+    TripBookingDetailsPayment trip;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_method);
         btnThanhToanTrucTiep=findViewById(R.id.btnThanhToanTrucTiep);
+        Intent intent = getIntent();
+        trip =(TripBookingDetailsPayment) intent.getSerializableExtra("tripinfo");
+
+        MyDataBase myDataBase = new MyDataBase(this);
 
         btnThanhToanTrucTiep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail());
                 showConfirmationDialog();
             }
         });
