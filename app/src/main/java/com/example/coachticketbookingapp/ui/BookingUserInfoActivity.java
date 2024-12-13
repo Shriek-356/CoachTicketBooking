@@ -72,7 +72,7 @@ public class BookingUserInfoActivity extends AppCompatActivity {
 
         edtFullName=findViewById(R.id.edtFullName);
         edtPhone=findViewById(R.id.edtPhone);
-        edtEmail=findViewById(R.id.edtEmail);
+        edtEmail=findViewById(R.id.edtEmaill);
         txvTamTinh=findViewById(R.id.txvTamTinh);
         btnXacNhanDatt=findViewById(R.id.btnXacNhanDatt);
         textView56 = findViewById(R.id.textView56);  // Email error message
@@ -143,6 +143,8 @@ public class BookingUserInfoActivity extends AppCompatActivity {
                 thistripinfo = new TripBookingDetailsPayment(user.getUserID(), tripInfo.getTripID(), currentDate, selectedTicketQuantity, totalPrice, fullName, phone, email);
                 Intent intentt = new Intent(BookingUserInfoActivity.this, PaymentMethodActivity.class);
                 intentt.putExtra("tripinfo", thistripinfo);
+                intentt.putExtra("ticketquantity",selectedTicketQuantity);
+                intentt.putExtra("user",user);
                 startActivity(intentt);
             }
         });

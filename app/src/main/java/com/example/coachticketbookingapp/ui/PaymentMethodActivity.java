@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coachticketbookingapp.Api.CreateOrder;
 import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
+import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
 import org.json.JSONObject;
@@ -33,6 +34,8 @@ public class PaymentMethodActivity extends AppCompatActivity {
     private Button btnThanhToanZl;
     private Button btnThanhToanTrucTiep;
     private double total=100000;
+    private int ticketQuantity;
+    private User user;
     TripBookingDetailsPayment trip;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,13 +45,11 @@ public class PaymentMethodActivity extends AppCompatActivity {
         btnThanhToanTrucTiep=findViewById(R.id.btnThanhToanTrucTiep);
         Intent intent = getIntent();
         trip =(TripBookingDetailsPayment) intent.getSerializableExtra("tripinfo");
-
-        MyDataBase myDataBase = new MyDataBase(this);
-
+        ticketQuantity=(Integer)intent.getSerializableExtra("ticketquantity");
+        user=(User)intent.getSerializableExtra("user");
         btnThanhToanTrucTiep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail());
                 showConfirmationDialog();
             }
         });
@@ -118,8 +119,15 @@ public class PaymentMethodActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Xử lý thanh toán trực tiếp
+                        MyDataBase myDataBase = new MyDataBase(getApplicationContext());
+                        myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail());
+                        myDataBase.updateTicketAvailability(trip.getTripId(),ticketQuantity);
+                        myDataBase.deleteTrippingCart(user.getUserID(), trip.getTripId());
                         Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                        intent.putExtra("user",user);
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .setNegativeButton("Không", new DialogInterface.OnClickListener() {

@@ -91,8 +91,8 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
         txvEndTime = itemView.findViewById(R.id.txvEndTime);
         txvDeparture = itemView.findViewById(R.id.txvDeparture);
         txvDestination = itemView.findViewById(R.id.txvDestination);
-        txvPrice = itemView.findViewById(R.id.txvCartPrice);
-        txvLocation = itemView.findViewById(R.id.txvCartLocation);
+        txvPrice = itemView.findViewById(R.id.txvTicketPrice);
+        txvLocation = itemView.findViewById(R.id.txvTicketLocation);
     }
   }
 }

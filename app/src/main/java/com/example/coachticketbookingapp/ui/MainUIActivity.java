@@ -37,7 +37,6 @@ public class MainUIActivity extends AppCompatActivity {
         bnvMainMenu = findViewById(R.id.bnvMainMenu);
 
         //Lay du lieu tu LoginActivity qua;
-
         presentUser = (User) getIntent().getSerializableExtra("user");
 
         if (presentUser != null) {

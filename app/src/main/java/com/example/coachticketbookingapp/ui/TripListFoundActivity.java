@@ -23,7 +23,7 @@ public class TripListFoundActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_list_found);
-        recycleview_trip_list_found=findViewById(R.id.recycleview_cart_list);
+        recycleview_trip_list_found=findViewById(R.id.recycleview_ticket_list);
 
         Intent intent = getIntent();
         thisUser = (User) intent.getSerializableExtra("thisuser");

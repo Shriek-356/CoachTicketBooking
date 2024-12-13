@@ -23,7 +23,7 @@ import java.util.List;
 public class MyDataBase extends SQLiteOpenHelper {
 
     private static String dbName = "CoachTicketBookingDB.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     // Table
 
     // User
@@ -75,7 +75,7 @@ public class MyDataBase extends SQLiteOpenHelper {
     public static String tbFeedback_UserId = "UserID";
     public static String tbFeedback_TripId = "TripID";
     public static String tbFeedback_FeedBackId = "FeedBackID";
-
+    public static String tbFeedback_Rate ="Rate";
     //Coach
     public static String tbCoach = "Coach";
     public static String tbCoach_CoachID="CoachID";
@@ -176,6 +176,7 @@ public class MyDataBase extends SQLiteOpenHelper {
                 + tbFeedback_Content + " TEXT, "
                 + tbFeedback_UserId + " INTEGER, "
                 + tbFeedback_TripId + " INTEGER, "
+                + tbFeedback_Rate + " INTEGER, "
                 + "FOREIGN KEY (" + tbFeedback_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
                 + "FOREIGN KEY (" + tbFeedback_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
                 + ")";
@@ -215,18 +216,8 @@ public class MyDataBase extends SQLiteOpenHelper {
         */
         if (oldVersion < DATABASE_VERSION) {
             //sqLiteDatabase.execSQL("ALTER TABLE " + tbTripBookingDetails + " ADD COLUMN " + tbTripBookingDetails_FullName + " INTEGER");
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tbTrippingCart);
-            String tbTrippingCartString = "CREATE TABLE " + tbTrippingCart + " ( "
-                    + tbTrippingCart_CartId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + tbTrippingCart_UserId + " INTEGER, "
-                    + tbTrippingCart_BookingDate + " DATETIME, "
-                    + tbTrippingCart_TripId + " INTEGER, "
-                    + tbTrippingCart_TicketQuantity + " INTEGER, "
-                    + tbTrippingCart_TotalPrice + " DOUBLE, "
-                    + "FOREIGN KEY (" + tbTrippingCart_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
-                    + "FOREIGN KEY (" + tbTrippingCart_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
-                    + ")";
-            sqLiteDatabase.execSQL(tbTrippingCartString);
+            String addRateColumn = "ALTER TABLE " + tbFeedback + " ADD COLUMN " + tbFeedback_Rate + " INTEGER";
+            sqLiteDatabase.execSQL(addRateColumn);
         }
     }
 
@@ -695,7 +686,6 @@ public class MyDataBase extends SQLiteOpenHelper {
         } else {
             System.out.println("Trip info added with ID: " + newRowId);
         }
-
         db.close();
     }
 
@@ -1189,6 +1179,36 @@ public class MyDataBase extends SQLiteOpenHelper {
 
         // Trả về danh sách các giỏ hàng
         return cartList;
+    }
+
+    public void updateTicketAvailability(int tripId, int ticketQuantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "UPDATE TripInfo SET TicketAvailable = TicketAvailable - ? WHERE TripId = ?";
+        db.execSQL(sql, new Object[]{ticketQuantity, tripId});
+        db.close();
+    }
+
+    public void deleteTrippingCart(int userId, int tripId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Điều kiện để xóa dữ liệu
+        String whereClause = tbTrippingCart_UserId + " = ? AND " + tbTrippingCart_TripId + " = ?";
+        String[] whereArgs = new String[] { String.valueOf(userId), String.valueOf(tripId) };
+        db.delete(tbTrippingCart, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void addFeedback(String feedbackId, String content, int userId, int tripId, int rate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(tbFeedback_FeedBackId, feedbackId);
+        values.put(tbFeedback_Content, content);
+        values.put(tbFeedback_UserId, userId);
+        values.put(tbFeedback_TripId, tripId);
+        values.put(tbFeedback_Rate, rate);
+
+        db.insert(tbFeedback, null, values);
+        db.close(); // Đóng cơ sở dữ liệu
     }
 }
 

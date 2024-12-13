@@ -28,7 +28,6 @@ public class MyTicketFragment extends Fragment implements TripBookingDetailsAdap
     RecyclerView recyclerView;
     User myTicketFragmentUser ;
     MyDataBase myDataBase;
-    Button btn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class MyTicketFragment extends Fragment implements TripBookingDetailsAdap
 
         dsTicket = myDataBase.getTripBookingList(myTicketFragmentUser.getUserID());
         TripBookingDetailsAdapter tripBookingDetailsAdapter = new TripBookingDetailsAdapter(getContext(),dsTicket,this);
-        recyclerView = view_ticket.findViewById(R.id.recycleview_cart_list);
+        recyclerView = view_ticket.findViewById(R.id.recycleview_ticket_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);//Dieu chinh cach hien thi
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(tripBookingDetailsAdapter);

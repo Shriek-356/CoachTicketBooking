@@ -67,10 +67,10 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         btnDatVe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                Intent intentTypeInfo = new Intent(TripListFoundDetailsActivity.this, BookingUserInfoActivity.class);
                intentTypeInfo.putExtra("tripinfoo",tripInfoo);
                intentTypeInfo.putExtra("userr",thisUser);
+               intentTypeInfo.putExtra("ticketQuantity",0);
                startActivity(intentTypeInfo);
             }
         });
@@ -88,7 +88,6 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
                         myDataBase.updateTrippingCart(trippingCart.getTripID(), thisUser.getUserID(), quantity, price);
                         Toast.makeText(getApplicationContext(), "Đã cập nhật vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 else {
                     // Nếu giỏ hàng chưa tồn tại, tạo mới giỏ hàng

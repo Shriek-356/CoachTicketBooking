@@ -33,18 +33,19 @@
             android:orientation="vertical">
 
             <!-- Tên vé -->
-            <TextView
-                android:id="@+id/txvCartLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="Vé xe Hà Nội - Đà Nẵng"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
 
             <!-- Địa điểm xuất phát và điểm đến -->
             <TextView
-                android:id="@+id/txvCartFromTo"
+                android:id="@+id/txvTicketLocationn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ve"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txvTicketFromTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -57,7 +58,7 @@
 
             <!-- Giá vé -->
             <TextView
-                android:id="@+id/txvCartPrice"
+                android:id="@+id/txvTicketPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

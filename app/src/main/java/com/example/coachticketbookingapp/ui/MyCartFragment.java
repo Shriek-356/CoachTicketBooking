@@ -1,6 +1,6 @@
 package com.example.coachticketbookingapp.ui;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.coachticketbookingapp.Object.TripBookingDetails;
 import com.example.coachticketbookingapp.Object.TrippingCart;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
@@ -32,6 +32,7 @@ public class MyCartFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,9 +48,13 @@ public class MyCartFragment extends Fragment {
         }
         if(thisUser!=null) {
             dsTrippingCarts=myDataBase.getTrippingCartList(thisUser.getUserID());
+            for (TrippingCart item : dsTrippingCarts) {
+                Toast.makeText(getContext(),String.valueOf(item.getTripID()),Toast.LENGTH_SHORT).show();
+            }
         }
 
-        CartAdapter cartAdapter = new CartAdapter(getContext(),dsTrippingCarts,thisUser);
+        CartAdapter cartAdapter = new CartAdapter(getContext());
+        cartAdapter.setData(dsTrippingCarts,thisUser);
         recyclerView=view_cart.findViewById(R.id.recycleview_cart_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

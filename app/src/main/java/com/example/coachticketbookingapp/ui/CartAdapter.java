@@ -18,6 +18,7 @@ import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,15 +28,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private MyDataBase myDataBase;
     private Context context;
     private List<TrippingCart> dsTrippingCart;
-    private TripInfo tripInfo;
     private User user;
 
-    public CartAdapter(Context context, List<TrippingCart> dsTrippingCart, User user) {
+    public CartAdapter(Context context) {
         this.context = context;
-        this.dsTrippingCart = dsTrippingCart;
-        this.user=user;
     }
 
+    public void setData(List<TrippingCart> dsTrippingCart, User user){
+        this.dsTrippingCart=dsTrippingCart;
+        this.user=user;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -54,11 +57,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
         myDataBase=new MyDataBase(context);
         //Lay TripInfo;
-        tripInfo = myDataBase.getTripInfo(trippingCart.getUserID());
+        TripInfo tripInfo = myDataBase.getTripInfo(trippingCart.getTripID());
 
-        if(tripInfo==null) {
-            return;
-        }
         holder.txvCartLocation.setText("Vé xe " + tripInfo.getDeparture() + " - " +tripInfo.getDestination());
         holder.txvCartFromTo.setText(tripInfo.getDeparture()+" -> " + tripInfo.getDestination());
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -101,8 +101,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public class CartViewHolder extends RecyclerView.ViewHolder{
-        TextView txvCartLocation,txvCartFromTo,txvCartPrice;
-        Button btnCartDatVe,btnDecrease,btnIncrease,txvTicketQuantity;
+        TextView txvCartLocation,txvCartFromTo,txvCartPrice,txvTicketQuantity;
+        Button btnCartDatVe,btnDecrease,btnIncrease;
 
         @SuppressLint("WrongViewCast")
         public CartViewHolder(@NonNull View itemView) {
