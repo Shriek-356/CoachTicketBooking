@@ -16,8 +16,9 @@ public class TripBookingDetails implements Serializable {
     private int distance;
     private int ticketQuantity;
     private double totalPrice;
+    private int isFeedBack;
 
-    public TripBookingDetails(int tripID, int tripBookingDetailsID,String departure,String destination, String firstLocation, String secondLocation, String bookingDate, String departureTime, String departureDate, double price, int distance, int ticketQuantity, double totalPrice) {
+    public TripBookingDetails(int tripID, int tripBookingDetailsID,String departure,String destination, String firstLocation, String secondLocation, String bookingDate, String departureTime, String departureDate, double price, int distance, int ticketQuantity, double totalPrice, int isFeedBack) {
         this.tripID = tripID;
         this.tripBookingDetailsID = tripBookingDetailsID;
         this.departure=departure;
@@ -31,6 +32,15 @@ public class TripBookingDetails implements Serializable {
         this.distance = distance;
         this.ticketQuantity = ticketQuantity;
         this.totalPrice = totalPrice;
+        this.isFeedBack=isFeedBack;
+    }
+
+    public int getIsFeedBack() {
+        return isFeedBack;
+    }
+
+    public void setIsFeedBack(int isFeedBack) {
+        this.isFeedBack = isFeedBack;
     }
 
     public String getDeparture() {

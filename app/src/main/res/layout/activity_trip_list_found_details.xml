@@ -10,7 +10,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="373dp"
-        android:layout_height="442dp"
+        android:layout_height="500dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="120dp"
         android:background="@drawable/cardview_custom"
@@ -27,8 +27,8 @@
                 android:id="@+id/btnThemGioHang"
                 android:layout_width="162dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="80dp"
                 android:background="@drawable/buttonui"
                 android:text="Thêm Vào Giò Hàng"
                 android:textColor="@color/material_dynamic_neutral10"
@@ -113,7 +113,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txvDiemDen"
+                android:id="@+id/txvDiemDenn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -208,12 +208,23 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnDatVe"
-                android:layout_width="134dp"
-                android:layout_height="49dp"
+                android:layout_width="145dp"
+                android:layout_height="51dp"
                 android:layout_marginStart="208dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="80dp"
                 android:background="@drawable/buttonui"
                 android:text="Đặt Vé"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btnXemDanhGia"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="112dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/buttonui"
+                android:text="Xem đánh giá"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

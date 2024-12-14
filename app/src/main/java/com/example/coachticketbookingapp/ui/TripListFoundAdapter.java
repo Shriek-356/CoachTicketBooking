@@ -16,6 +16,8 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+import DataBase.MyDataBase;
+
 public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdapter.TripListFoundViewHolder>  {
     private Context mContext;
     private List<TripInfo> dsTrip;
@@ -57,7 +59,17 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
         holder.txvPrice.setText(numberFormat.format(tripInfo.getPrice()));
         String s = "Từ " + tripInfo.getDeparture() + " đến " + tripInfo.getDestination();
         holder.txvLocation.setText(s);
+        MyDataBase myDataBase = new MyDataBase(mContext);
 
+        float totalRate = myDataBase.getAverageRating(tripInfo.getCoachID());
+        if(totalRate==0){
+            holder.txvAvgRate.setText("Chưa có đánh giá");
+        }
+        else{
+            List<Float> dsRate = myDataBase.getListRate(tripInfo.getCoachID());
+            int quantityFeedBack = dsRate.size();
+            holder.txvAvgRate.setText(String.valueOf(totalRate)+" (" + String.valueOf(quantityFeedBack)+") ");
+        }
         // Set sự kiện click cho item
         holder.itemView.setOnClickListener(v -> {
             // Khi click vào item, gọi callback
@@ -83,6 +95,7 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
     TextView txvDestination;
     TextView txvPrice;
     TextView txvLocation;
+    TextView txvAvgRate;
 
     public TripListFoundViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -93,6 +106,7 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
         txvDestination = itemView.findViewById(R.id.txvDestination);
         txvPrice = itemView.findViewById(R.id.txvTicketPrice);
         txvLocation = itemView.findViewById(R.id.txvTicketLocation);
+        txvAvgRate = itemView.findViewById(R.id.txvAvgRate);
     }
   }
 }

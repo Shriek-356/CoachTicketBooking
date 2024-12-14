@@ -52,19 +52,12 @@ public class LoginActivity extends AppCompatActivity {
 
         MyDataBase mydb = new MyDataBase(this);
         //mydb.open();//Hieu don gian la tao csdl neu chua ton tai
-
-        mydb.addTripInfo(1, "Bến Xe Miền Tây", "Bến Xe Phương Trang", "Hồ Chí Minh", "Đồng Tháp",
-                "08:00", "23/11/2024", "10:00", "23/11/2024", 50, 200000, 100);
         //SQLiteDatabase db = mydb.getWritableDatabase();
-        mydb.addTripInfo(1, "Bến Xe Miền Tây", "Bến Xe Phương Trang", "Hồ Chí Minh", "Đồng Tháp",
-                "08:00", "23/11/2024", "10:00", "23/11/2024", 50, 200000, 100);
-        mydb.addTripInfo(6, "Bến Xe Nha Trang", "Bến Xe Phú Yên", "Nha Trang", "Phú Yên", "07:00", "2/10/2024", "10:00", "2/10/2024",50, 200000, 100);
-        Date currentDateObj = new Date();  // Lấy thời gian hiện tại
 
+        Date currentDateObj = new Date();  // Lấy thời gian hiện tại
         // Chuyển đổi thời gian thành chuỗi theo định dạng dd/MM/yyyy
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String currentDate = sdf.format(currentDateObj);  // Chuyển thời gian thành chuỗi
-
 
         //mydb.addTripBookingDetails(1,50,currentDate,1,35000);
         //mydb.addTripBookingDetails(1,55,currentDate,1,20000);

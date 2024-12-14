@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -177,7 +178,8 @@ public class HomePageFragment extends Fragment {
     }
 
     private List<String> getProvincesList() {
-        return Arrays.asList(
+        // Tạo danh sách các tỉnh thành
+        List<String> provinces = Arrays.asList(
                 "Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Hải Phòng", "Cần Thơ",
                 "Vũng Tàu", "Quảng Ninh", "Lào Cai", "Lâm Đồng", "Khánh Hòa",
                 "Bình Dương", "Đồng Nai", "Nghệ An", "Thanh Hóa", "Thừa Thiên - Huế",
@@ -190,8 +192,14 @@ public class HomePageFragment extends Fragment {
                 "Bình Phước", "Bình Định", "Phú Yên", "Hòa Bình", "Bắc Ninh",
                 "Bắc Giang", "Hải Dương", "Hưng Yên", "Vĩnh Phúc", "Hà Tĩnh",
                 "Trà Vinh", "Vĩnh Long", "Long An", "Tiền Giang", "Bến Tre",
-                "Tây Ninh"
+                "Tây Ninh", "Đồng Tháp", "Nha Trang"
         );
+
+        // Sắp xếp danh sách các tỉnh theo thứ tự alphabet
+        Collections.sort(provinces);
+
+        // Trả về danh sách đã được sắp xếp
+        return provinces;
     }
 
     private void showDatePicker(EditText targetEditText) {

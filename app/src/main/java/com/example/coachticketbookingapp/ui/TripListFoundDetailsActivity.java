@@ -31,7 +31,7 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
     private Button btnDatVe;
     private User thisUser;
     private MyDataBase myDataBase;
-    private Button btnThemVaoGioHang;
+    private Button btnThemVaoGioHang,btnXemDanhGia;
     private TrippingCart trippingCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trip_list_found_details);
         myDataBase = new MyDataBase(this);
         txvDiemBatDau = findViewById(R.id.txvDiemBatDau);
-        txvDiemDen = findViewById(R.id.txvDiemDen);
+        txvDiemDen = findViewById(R.id.txvDiemDenn);
         txvGioKhoiHanh = findViewById(R.id.txvGioKhoiHanh);
         txvGioKetThuc = findViewById(R.id.txvGioKetThuc);
         txvDiemDon = findViewById(R.id.txvDiemDon);
@@ -48,11 +48,13 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         txvGiaTien = findViewById(R.id.txvGiaTien);
         btnDatVe = findViewById(R.id.btnDatVe);
         btnThemVaoGioHang = findViewById(R.id.btnThemGioHang);
+        btnXemDanhGia = findViewById(R.id.btnXemDanhGia);
 
         Intent intent = getIntent();
         thisUser =(User) intent.getSerializableExtra("thisuser");
         tripInfoo = (TripInfo) intent.getSerializableExtra("trip");
-         if(tripInfoo != null){
+
+        if(tripInfoo != null){
             txvDiemBatDau.setText(tripInfoo.getDeparture());
             txvDiemDen.setText(tripInfoo.getDestination());
             txvGioKhoiHanh.setText(tripInfoo.getDepartureTime());
@@ -105,5 +107,15 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnXemDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intenttt = new Intent(TripListFoundDetailsActivity.this, FeedBackListActivity.class);
+                intenttt.putExtra("tripinfo",tripInfoo);
+                startActivity(intenttt);
+            }
+        });
+
     }
 }

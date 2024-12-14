@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.coachticketbookingapp.Object.FeedBack;
 import com.example.coachticketbookingapp.Object.TripBookingDetails;
 import com.example.coachticketbookingapp.Object.TripInfo;
 import com.example.coachticketbookingapp.Object.TrippingCart;
@@ -23,7 +24,7 @@ import java.util.List;
 public class MyDataBase extends SQLiteOpenHelper {
 
     private static String dbName = "CoachTicketBookingDB.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 12;
     // Table
 
     // User
@@ -73,6 +74,7 @@ public class MyDataBase extends SQLiteOpenHelper {
     public static String tbFeedback = "FeedBack";
     public static String tbFeedback_Content = "Content";
     public static String tbFeedback_UserId = "UserID";
+    public static String tbFeedback_CoachId = "CoachID";
     public static String tbFeedback_TripId = "TripID";
     public static String tbFeedback_FeedBackId = "FeedBackID";
     public static String tbFeedback_Rate ="Rate";
@@ -95,6 +97,8 @@ public class MyDataBase extends SQLiteOpenHelper {
     public static String tbTripBookingDetails_FullName ="FullName";
     public static String tbTripBookingDetails_PhoneNumber ="PhoneNumber";
     public static String tbTripBookingDetails_Email ="Email";
+    public static String tbTripBookingDetails_IsFeedBack="IsFeedBack";
+
     public MyDataBase(Context context) {
         super(context, dbName, null, DATABASE_VERSION);
     }
@@ -151,9 +155,10 @@ public class MyDataBase extends SQLiteOpenHelper {
                 + tbTripBookingDetails_BookingDate + " DATETIME, "
                 + tbTripBookingDetails_TicketQuantity + " INTEGER, "
                 + tbTripBookingDetails_TotalPrice + " DOUBLE, "
-                + tbTripBookingDetails_FullName + "TEXT, "
-                + tbTripBookingDetails_PhoneNumber + "TEXT, "
-                + tbTripBookingDetails_Email + "TEXT, "
+                + tbTripBookingDetails_FullName + " TEXT, "
+                + tbTripBookingDetails_PhoneNumber + " TEXT, "
+                + tbTripBookingDetails_Email + " TEXT, "
+                + tbTripBookingDetails_IsFeedBack + " INTEGER, "
                 + "FOREIGN KEY (" + tbTripBookingDetails_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
                 + "FOREIGN KEY (" + tbTripBookingDetails_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
                 + ")";
@@ -172,13 +177,15 @@ public class MyDataBase extends SQLiteOpenHelper {
 
         // Tạo bảng Feedback
         String tbFeedBackString = "CREATE TABLE " + tbFeedback + " ( "
-                + tbFeedback_FeedBackId + " TEXT PRIMARY KEY, "
+                + tbFeedback_FeedBackId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + tbFeedback_Content + " TEXT, "
                 + tbFeedback_UserId + " INTEGER, "
+                + tbFeedback_CoachId + " INTEGER, "
                 + tbFeedback_TripId + " INTEGER, "
-                + tbFeedback_Rate + " INTEGER, "
+                + tbFeedback_Rate + " FLOAT, "
                 + "FOREIGN KEY (" + tbFeedback_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
-                + "FOREIGN KEY (" + tbFeedback_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + ")"
+                + "FOREIGN KEY (" + tbFeedback_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + "), "
+                + "FOREIGN KEY (" + tbFeedback_CoachId + ") REFERENCES " + tbCoach + " (" + tbCoach_CoachID + ")"
                 + ")";
 
 
@@ -215,9 +222,19 @@ public class MyDataBase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);  // Tạo lại các bảng mới
         */
         if (oldVersion < DATABASE_VERSION) {
-            //sqLiteDatabase.execSQL("ALTER TABLE " + tbTripBookingDetails + " ADD COLUMN " + tbTripBookingDetails_FullName + " INTEGER");
-            String addRateColumn = "ALTER TABLE " + tbFeedback + " ADD COLUMN " + tbFeedback_Rate + " INTEGER";
-            sqLiteDatabase.execSQL(addRateColumn);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tbFeedback);
+            String tbFeedBackString = "CREATE TABLE " + tbFeedback + " ( "
+                    + tbFeedback_FeedBackId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + tbFeedback_Content + " TEXT, "
+                    + tbFeedback_UserId + " INTEGER, "
+                    + tbFeedback_CoachId + " INTEGER, "
+                    + tbFeedback_TripId + " INTEGER, "
+                    + tbFeedback_Rate + " FLOAT, "
+                    + "FOREIGN KEY (" + tbFeedback_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
+                    + "FOREIGN KEY (" + tbFeedback_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + "), "
+                    + "FOREIGN KEY (" + tbFeedback_CoachId + ") REFERENCES " + tbCoach + " (" + tbCoach_CoachID + ")"
+                    + ")";
+            sqLiteDatabase.execSQL(tbFeedBackString);
         }
     }
 
@@ -983,11 +1000,9 @@ public class MyDataBase extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public List<TripBookingDetails> getTripBookingList(int userID){
         List<TripBookingDetails> list = new ArrayList<>();
-
         SQLiteDatabase db = this.getReadableDatabase();//Mo csdl
-
         //Cau truy van
-        String query = "SELECT a.TripID, b.TripBookingDetailsID,a.Departure,a.Destination, a.FirstLocation, a.SecondLocation, b.BookingDate, a.DepartureTime, a.DepartureDate, a.Price, a.Distance, b.TicketQuantity, b.TotalPrice "
+        String query = "SELECT a.TripID, b.TripBookingDetailsID,a.Departure,a.Destination, a.FirstLocation, a.SecondLocation, b.BookingDate, a.DepartureTime, a.DepartureDate, a.Price, a.Distance, b.TicketQuantity, b.TotalPrice, b.IsFeedBack "
                 + "FROM TripInfo a JOIN TripBookingDetails b "
                 + "On a.TripID = b.TripID "
                 + "WHERE b.UserID = ?";
@@ -1009,8 +1024,8 @@ public class MyDataBase extends SQLiteOpenHelper {
                 int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
                 int ticketQuantity = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_TicketQuantity));
                 double totalPrice = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_TotalPrice));
-
-                TripBookingDetails tripBookingDetails = new TripBookingDetails(tripID,tripBookingDetailsId,departure,destination,firstLocation,secondLocation,bookingDate,departureTime,departureDate,price,distance,ticketQuantity,totalPrice);
+                int isFeedBack = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_IsFeedBack));
+                TripBookingDetails tripBookingDetails = new TripBookingDetails(tripID,tripBookingDetailsId,departure,destination,firstLocation,secondLocation,bookingDate,departureTime,departureDate,price,distance,ticketQuantity,totalPrice,isFeedBack);
                 list.add(tripBookingDetails);
             }while (cursor.moveToNext());
         }
@@ -1197,19 +1212,87 @@ public class MyDataBase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addFeedback(String feedbackId, String content, int userId, int tripId, int rate) {
+    public void addFeedback(String content, int userId, int coachId,int tripId, float rate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(tbFeedback_FeedBackId, feedbackId);
         values.put(tbFeedback_Content, content);
         values.put(tbFeedback_UserId, userId);
-        values.put(tbFeedback_TripId, tripId);
+        values.put(tbFeedback_CoachId, coachId);
+        values.put(tbFeedback_TripId,tripId);
         values.put(tbFeedback_Rate, rate);
-
         db.insert(tbFeedback, null, values);
         db.close(); // Đóng cơ sở dữ liệu
     }
+
+    public void updateIsFeedBack(int tripBookingDetailsId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("IsFeedBack", 1); // Cập nhật IsFeedBack thành 1 sau khi đánh giá
+        db.update(tbTripBookingDetails, values, tbTripBookingDetails_TripBookingDetailsId + " = ?", new String[]{String.valueOf(tripBookingDetailsId)});
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public List<FeedBack> getFeedbacksByCoachId(int coachId) {
+        List<FeedBack> feedbackList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn lấy các đánh giá của nhà xe
+        Cursor cursor = db.rawQuery("SELECT * FROM FeedBack WHERE CoachId = ?", new String[]{String.valueOf(coachId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int feedBackID = cursor.getInt(cursor.getColumnIndex(tbFeedback_FeedBackId));
+                String content = cursor.getString(cursor.getColumnIndex(tbFeedback_Content));
+                int userID = cursor.getInt(cursor.getColumnIndex(tbFeedback_UserId));
+                int coachid = cursor.getInt(cursor.getColumnIndex(tbFeedback_CoachId));
+                int tripId = cursor.getInt(cursor.getColumnIndex(tbFeedback_TripId));
+                float rate = cursor.getFloat(cursor.getColumnIndex(tbFeedback_Rate));
+                
+                FeedBack feedBack = new FeedBack(feedBackID,content,userID,coachid,tripId,rate);
+                feedbackList.add(feedBack);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        return feedbackList;
+    }
+    @SuppressLint("Range")
+    public List<Float> getListRate(int coachID){
+        List<Float> getList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT Rate FROM " + tbFeedback
+                + " WHERE " + tbFeedback_CoachId + " = ? ";
+
+        Cursor cursor = db.rawQuery(query,new String[]{String.valueOf(coachID)});
+
+        if(cursor!=null&&cursor.moveToFirst()){
+            do{
+                Float rate = cursor.getFloat(cursor.getColumnIndex(tbFeedback_Rate));
+                getList.add(rate);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return getList;
+    }
+
+    public float getAverageRating(int coachID) {
+        List<Float> ratings = getListRate(coachID);  // Lấy danh sách các đánh giá
+
+        if (ratings.isEmpty()) {
+            return 0;  // Nếu không có đánh giá, trả về 0
+        }
+
+        float total = 0;
+        for (Float rate : ratings) {
+            total += rate;  // Tính tổng các giá trị đánh giá
+        }
+
+        return total / ratings.size();  // Tính và trả về điểm trung bình
+    }
+
 }
 
 

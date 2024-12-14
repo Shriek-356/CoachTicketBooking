@@ -50,7 +50,6 @@ public class MyTicketFragment extends Fragment implements TripBookingDetailsAdap
         if(bundle!=null){
             myTicketFragmentUser = (User)bundle.getSerializable("user");
         }
-
         dsTicket = myDataBase.getTripBookingList(myTicketFragmentUser.getUserID());
         TripBookingDetailsAdapter tripBookingDetailsAdapter = new TripBookingDetailsAdapter(getContext(),dsTicket,this);
         recyclerView = view_ticket.findViewById(R.id.recycleview_ticket_list);

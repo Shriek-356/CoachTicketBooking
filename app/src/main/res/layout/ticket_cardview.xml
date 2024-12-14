@@ -58,7 +58,7 @@
 
             <!-- Giá vé -->
             <TextView
-                android:id="@+id/txvTicketPrice"
+                android:id="@+id/txvTicketPricee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

@@ -60,7 +60,6 @@ public class TripBookingDetailsAdapter extends RecyclerView.Adapter<TripBookingD
         });
 
     }
-
     @Override
     public int getItemCount() {
         return dsTrip.size();
@@ -75,7 +74,7 @@ public class TripBookingDetailsAdapter extends RecyclerView.Adapter<TripBookingD
             super(itemView);
             txvLocation = itemView.findViewById(R.id.txvTicketLocationn);
             txvFromTo = itemView.findViewById(R.id.txvTicketFromTo);
-            txvPrice = itemView.findViewById(R.id.txvTicketPrice);
+            txvPrice = itemView.findViewById(R.id.txvTicketPricee);
         }
     }
 }
