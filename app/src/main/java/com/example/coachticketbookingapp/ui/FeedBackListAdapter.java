@@ -39,13 +39,9 @@ public class FeedBackListAdapter extends RecyclerView.Adapter<FeedBackListAdapte
     public void onBindViewHolder(@NonNull FeedBackViewHolder holder, int position) {
         FeedBack feedback = feedbackList.get(position);
 
-        // Set tên người đánh giá
         holder.textViewUserName.setText("User #" + feedback.getUserId());
 
-        // Set nội dung đánh giá
         holder.textViewContent.setText(feedback.getContent());
-
-        // Set rating
         holder.ratingBar.setRating(feedback.getRate());
 
     }

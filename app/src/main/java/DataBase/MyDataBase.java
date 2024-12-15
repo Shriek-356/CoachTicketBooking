@@ -19,12 +19,14 @@ import com.example.coachticketbookingapp.ui.CoachTripInfo;
 import com.example.coachticketbookingapp.ui.Userr;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MyDataBase extends SQLiteOpenHelper {
 
     private static String dbName = "CoachTicketBookingDB.db";
-    private static final int DATABASE_VERSION = 12;
+    private static final int DATABASE_VERSION = 13;
     // Table
 
     // User
@@ -222,19 +224,15 @@ public class MyDataBase extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);  // Tạo lại các bảng mới
         */
         if (oldVersion < DATABASE_VERSION) {
-            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tbFeedback);
-            String tbFeedBackString = "CREATE TABLE " + tbFeedback + " ( "
-                    + tbFeedback_FeedBackId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + tbFeedback_Content + " TEXT, "
-                    + tbFeedback_UserId + " INTEGER, "
-                    + tbFeedback_CoachId + " INTEGER, "
-                    + tbFeedback_TripId + " INTEGER, "
-                    + tbFeedback_Rate + " FLOAT, "
-                    + "FOREIGN KEY (" + tbFeedback_UserId + ") REFERENCES " + tbUser + " (" + tbUser_UserId + "), "
-                    + "FOREIGN KEY (" + tbFeedback_TripId + ") REFERENCES " + tbTripInfo + " (" + tbTripInfo_TripId + "), "
-                    + "FOREIGN KEY (" + tbFeedback_CoachId + ") REFERENCES " + tbCoach + " (" + tbCoach_CoachID + ")"
-                    + ")";
-            sqLiteDatabase.execSQL(tbFeedBackString);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + tbCoach);
+            // Tạo bảng Coach
+            String tbCoachString = "CREATE TABLE " + tbCoach + " ( "
+                    + tbCoach_CoachID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + tbCoach_CoachBrand + " TEXT, "
+                    + tbCoach_TotalSeat + " INTEGER, "
+                    + tbCoach_Type + " TEXT, "
+                    + tbCoach_LicensePlate + " TEXT )";
+            sqLiteDatabase.execSQL(tbCoachString);
         }
     }
 
@@ -246,11 +244,11 @@ public class MyDataBase extends SQLiteOpenHelper {
     public void addCoach(String coachBrand, int totalSeat, String licensePlate, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("coachBrand", coachBrand);
-        values.put("totalSeat", totalSeat);
-        values.put("licensePlate", licensePlate);
-        values.put("type", type);
-        db.insert("Coach", null, values);
+        values.put(tbCoach_CoachBrand, coachBrand);
+        values.put(tbCoach_TotalSeat, totalSeat);
+        values.put(tbCoach_LicensePlate, licensePlate);
+        values.put(tbCoach_Type, type);
+        db.insert(tbCoach, null, values);
         db.close();
     }
 
@@ -273,8 +271,6 @@ public class MyDataBase extends SQLiteOpenHelper {
         db.close();
     }
 
-
-
     public boolean isLicensePlateExist(String licensePlate) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM Coach WHERE licensePlate = ?";
@@ -284,7 +280,6 @@ public class MyDataBase extends SQLiteOpenHelper {
         boolean exists = cursor.getCount() > 0;
         cursor.close();
         db.close();
-
         return exists;
     }
 
@@ -317,8 +312,7 @@ public class MyDataBase extends SQLiteOpenHelper {
 
         db.close();
     }
-
-
+    
     //Hàm lấy chuyến xe được tìm thấy
     @SuppressLint("Range")
     public List<TripInfo> FoundTrip(String departure, String destination, String departuredate) {
@@ -1291,6 +1285,100 @@ public class MyDataBase extends SQLiteOpenHelper {
         }
 
         return total / ratings.size();  // Tính và trả về điểm trung bình
+    }
+
+
+    @SuppressLint("Range")
+    public List<TripInfo> getTop5UpcomingTrips() {
+        List<TripInfo> upcomingTrips = new ArrayList<>();
+        Set<String> seenTrips = new HashSet<>(); // Sử dụng HashSet để loại bỏ các chuyến trùng lặp
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn lấy các chuyến xe gần nhất có ngày khởi hành từ hiện tại trở đi
+        String query = "SELECT * FROM " + tbTripInfo + " " +
+                "WHERE " + tbTripInfo_DepartureDate + " >= date('now') " + // So sánh ngày khởi hành trực tiếp với ngày hiện tại
+                "ORDER BY " + tbTripInfo_DepartureDate + " ASC"; // Sắp xếp theo ngày khởi hành gần nhất
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // Lấy thông tin từ cursor và tạo đối tượng TripInfo
+                int tripID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TripId));
+                String departure = cursor.getString(cursor.getColumnIndex(tbTripInfo_Departure));
+                String destination = cursor.getString(cursor.getColumnIndex(tbTripInfo_Destination));
+
+                // Kiểm tra xem chuyến xe có trùng điểm đi và điểm đến không
+                String tripKey = departure + "-" + destination; // Cặp điểm đi và điểm đến tạo thành khóa duy nhất
+                if (!seenTrips.contains(tripKey)) {
+                    seenTrips.add(tripKey); // Thêm vào Set để đánh dấu chuyến đã xem
+
+                    int coachID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_CoachID));
+                    String firstLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_FirstLocation));
+                    String secondLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_SecondLocation));
+                    String departureTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureTime));
+                    String departureDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureDate));
+                    String destinationTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationTime));
+                    String destinationDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationDate));
+                    int ticketAvailable = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TicketAvailable));
+                    double price = cursor.getDouble(cursor.getColumnIndex(tbTripInfo_Price));
+                    int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
+
+                    // Tạo đối tượng TripInfo và thêm vào danh sách
+                    TripInfo tripInfo = new TripInfo(tripID, coachID, firstLocation, secondLocation, departure, destination,
+                            departureTime, departureDate, destinationTime, destinationDate, ticketAvailable, price, distance);
+                    upcomingTrips.add(tripInfo);
+
+                    // Dừng nếu đã đủ 5 chuyến
+                    if (upcomingTrips.size() == 5) {
+                        break;
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return upcomingTrips;
+    }
+
+
+
+
+    @SuppressLint("Range")
+    public List<TripInfo> getTop5Trips() {
+        List<TripInfo> trips = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn lấy 5 chuyến xe bất kỳ từ bảng TripInfo
+        String query = "SELECT * FROM " + tbTripInfo + " LIMIT 5"; // Lấy 5 chuyến xe đầu tiên
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int tripID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TripId));
+                String departure = cursor.getString(cursor.getColumnIndex(tbTripInfo_Departure));
+                String destination = cursor.getString(cursor.getColumnIndex(tbTripInfo_Destination));
+                int coachID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_CoachID));
+                String firstLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_FirstLocation));
+                String secondLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_SecondLocation));
+                String departureTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureTime));
+                String departureDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureDate));
+                String destinationTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationTime));
+                String destinationDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationDate));
+                int ticketAvailable = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TicketAvailable));
+                double price = cursor.getDouble(cursor.getColumnIndex(tbTripInfo_Price));
+                int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
+
+                // Tạo đối tượng TripInfo và thêm vào danh sách
+                TripInfo tripInfo = new TripInfo(tripID, coachID, firstLocation, secondLocation, departure, destination,
+                        departureTime, departureDate, destinationTime, destinationDate, ticketAvailable, price, distance);
+                trips.add(tripInfo);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return trips;
     }
 
 }

@@ -86,19 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        /*String insertUserQuery = "INSERT INTO " + MyDataBase.tbUser + " ("
-                + MyDataBase.tbUser_UserName + ", "
-                + MyDataBase.tbUser_Password + ", "
-                + MyDataBase.tbUser_Email + ", "
-                + MyDataBase.tbUser_Phone + ", "
-                + MyDataBase.tbUser_Sex + ", "
-                + MyDataBase.tbUser_Role + ") VALUES (?, ?, ?, ?, ?, 'User')";
-
-        db.execSQL(insertUserQuery, new Object[]{name, password, email, phone, sex});
-
-
-         */
-        
         myDataBase.addUser(sex,phone,email,name,password,"User");
         Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
 

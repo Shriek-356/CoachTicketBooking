@@ -60,7 +60,8 @@ public class HomePageFragment extends Fragment {
 
     private User thisUser;
     private View view;
-    private Button btnTimKiemChuyenDi;
+    private Button btnTimKiemChuyenDi,btntest;
+    private List<TripInfo> comingUpTripInfo = new ArrayList<>();
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,10 +70,10 @@ public class HomePageFragment extends Fragment {
         switchTrip = view.findViewById(R.id.switchKhuhoi);
         constraintLayout=view.findViewById(R.id.csLayout3);
         editText = view.findViewById(R.id.editTextNgayVe);
-        recyclerView = view.findViewById(R.id.recyclerview);
+        recyclerView = view.findViewById(R.id.recyclerviewComingUp);
         txvHello=view.findViewById(R.id.txvHello);
         btnTimKiemChuyenDi=view.findViewById(R.id.btnTimKiemChuyenDi);
-
+        btntest=view.findViewById(R.id.button2);
         editTextNoiXuatPhat = view.findViewById(R.id.editTextNoiXuatPhat);
         editTextNoiDen = view.findViewById(R.id.editTextNoiDen);
         editTextNgayDi = view.findViewById(R.id.editTextNgayDi);
@@ -82,21 +83,17 @@ public class HomePageFragment extends Fragment {
 
         editTextNoiXuatPhat.setOnClickListener(v -> showProvinceListPopup(editTextNoiXuatPhat));
         editTextNoiDen.setOnClickListener(v -> showProvinceListPopup(editTextNoiDen));
-
         editTextNgayDi.setOnClickListener(v -> showDatePicker(editTextNgayDi));
         editTextNgayVe.setOnClickListener(v -> showDatePicker(editTextNgayVe));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);//Dieu chinh cach hien thi
         recyclerView.setLayoutManager(layoutManager);
-        dsitem.add(new item("100000","A","b",R.drawable.loginbackground));
-        dsitem.add(new item("100000","x","b",R.drawable.loginbackground));
-        dsitem.add(new item("100000","v","o",R.drawable.loginbackground));
-        dsitem.add(new item("100000","j","i",R.drawable.loginbackground));
-        dsitem.add(new item("100000","A","k",R.drawable.loginbackground));
-        dsitem.add(new item("100000","A","k",R.drawable.loginbackground));
 
-        ItemAdapter itemAdapter = new ItemAdapter(getContext(),dsitem);
-        recyclerView.setAdapter(itemAdapter);
+        comingUpTripInfo = myDataBase.getTop5UpcomingTrips();
+
+        ComingUpTripInfoAdapter comingUpTripInfoAdapter = new ComingUpTripInfoAdapter(getContext(),comingUpTripInfo);
+        recyclerView.setAdapter(comingUpTripInfoAdapter);
+
 
         //Nhan object user tu activity;
         Bundle bundle = getArguments();

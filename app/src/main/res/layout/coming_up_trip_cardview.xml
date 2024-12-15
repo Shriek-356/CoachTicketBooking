@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="315dp"
+        android:layout_height="314dp"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/cardview_custom"
+        app:cardBackgroundColor="#FFEFD5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="109dp"
+                android:layout_height="159dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ticketicon" />
+
+            <TextView
+                android:id="@+id/txvCMDeparture"
+                android:layout_width="166dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="20dp"
+                android:text="TextView"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView8"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView15"
+                android:layout_width="23dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="92dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView8"
+                app:layout_constraintTop_toBottomOf="@+id/txvCMDeparture"
+                app:srcCompat="@drawable/baseline_arrow_downward_24" />
+
+            <TextView
+                android:id="@+id/txvCMDestination"
+                android:layout_width="166dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView8"
+                app:layout_constraintTop_toBottomOf="@+id/imageView15" />
+
+            <TextView
+                android:id="@+id/txvCMRating"
+                android:layout_width="237dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="96dp"
+                android:text="Đánh giá"
+                android:textSize="26sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="40dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="100dp"
+                app:layout_constraintStart_toEndOf="@+id/txvCMRating"
+                app:layout_constraintTop_toBottomOf="@+id/txvCMDepartureDate"
+                app:srcCompat="@drawable/baseline_star_rate_24"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/txvCMDepartureDate"
+                android:layout_width="162dp"
+                android:layout_height="38dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:text="Ngay xuat phat"
+                android:textColor="@color/black"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txvCMDestination" />
+
+            <TextView
+                android:id="@+id/txvNhaXe"
+                android:layout_width="282dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="TextView"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txvCMDepartureDate" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

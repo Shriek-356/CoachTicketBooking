@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.util.Date;
+    import java.util.Date;
 
 import DataBase.MyDataBase;
 
@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         txvLinkToReg = findViewById(R.id.txvLinkToReg);
         edtEmail = findViewById(R.id.edtEmail);
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         myDataBase.addInitialTripInfo();
 
         MyDataBase mydb = new MyDataBase(this);
+
         //mydb.open();//Hieu don gian la tao csdl neu chua ton tai
         //SQLiteDatabase db = mydb.getWritableDatabase();
 
@@ -58,10 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         // Chuyển đổi thời gian thành chuỗi theo định dạng dd/MM/yyyy
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String currentDate = sdf.format(currentDateObj);  // Chuyển thời gian thành chuỗi
-
-        //mydb.addTripBookingDetails(1,50,currentDate,1,35000);
-        //mydb.addTripBookingDetails(1,55,currentDate,1,20000);
-        //mydb.addTripBookingDetails(1,20,currentDate,1,300000);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
