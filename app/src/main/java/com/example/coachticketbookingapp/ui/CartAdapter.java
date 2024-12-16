@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coachticketbookingapp.Object.TripInfo;
@@ -63,17 +65,33 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.txvCartFromTo.setText(tripInfo.getDeparture()+" -> " + tripInfo.getDestination());
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         holder.txvCartPrice.setText(numberFormat.format(tripInfo.getPrice()));
-
+        holder.txvTicketQuantity.setText(String.valueOf(trippingCart.getTicketQuantity()));
         holder.btnDecrease.setOnClickListener(view -> {
-
             int number = Integer.parseInt(holder.txvTicketQuantity.getText().toString());
             if(number==1){
-                return;
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Thông báo")
+                        .setMessage("Bạn có muốn xóa vé khỏi giỏ hàng không?")
+                        .setPositiveButton("Đồng ý", (dialog, which) -> {
+                            myDataBase.deleteTrippingCart(user.getUserID(), trippingCart.getTripID());
+                            notifyItemRemoved(position);
+                            notifyDataSetChanged(); // Cập nhật lại RecyclerView
+                            // Hiển thị thông báo xóa thành công
+                            Toast.makeText(context, "Vé đã được xóa khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Hủy Bỏ",(dialog,which)->{
+                            dialog.dismiss();
+                        })
+                        .create()
+                        .show();
             }
-            number=number-1;
-            holder.txvTicketQuantity.setText(String.valueOf(number));
+            else {
+                number = number - 1;
+                holder.txvTicketQuantity.setText(String.valueOf(number));
+                myDataBase.updateTrippingCart(trippingCart.getTripID(), user.getUserID(),number,number*tripInfo.getPrice());
+            }
         });
-
+        
         holder.btnIncrease.setOnClickListener(view -> {
             int number = Integer.parseInt(holder.txvTicketQuantity.getText().toString());
             if(number==tripInfo.getTicketAvailable()){
@@ -81,6 +99,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
             number=number+1;
             holder.txvTicketQuantity.setText(String.valueOf(number));
+            myDataBase.updateTrippingCart(trippingCart.getTripID(), user.getUserID(),number,number*tripInfo.getPrice());
         });
 
         holder.btnCartDatVe.setOnClickListener(view -> {

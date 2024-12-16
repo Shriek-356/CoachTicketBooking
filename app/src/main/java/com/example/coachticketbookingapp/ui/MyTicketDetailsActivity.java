@@ -1,7 +1,10 @@
 package com.example.coachticketbookingapp.ui;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +33,8 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
     TripBookingDetails tripBookingDetails;
     User myTicketDetailsActivityUser;
     TextView txvTenHanhKhach, txvDienThoai,txvEmail, txvDiemXuatPhat, txvDiemDen, txvNgayDatVe, txvNgayXuatPhat, txvGiaVe, txvSoVe, txvMaVe;
-    Button btnDanhGia;
+    Button btnDanhGia,btnHuyVe;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,7 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
         txvSoVe = findViewById(R.id.txvSoVe);
         txvMaVe = findViewById(R.id.txvMaVe);
         btnDanhGia = findViewById(R.id.btnDanhGia);
+        btnHuyVe = findViewById(R.id.btnHuyVe);
 
         if(tripBookingDetails!=null){
             txvTenHanhKhach.setText(myTicketDetailsActivityUser.getUserName());
@@ -66,6 +71,8 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
             txvSoVe.setText(String.valueOf(tripBookingDetails.getTicketQuantity()));
             txvMaVe.setText(String.valueOf(tripBookingDetails.getTripBookingDetailsID()));
 
+            checkCancelTicket(tripBookingDetails.getBookingTime());
+
             btnDanhGia.setOnClickListener(view -> {
                 MyDataBase myDataBase = new MyDataBase(getApplicationContext());
                 if(tripBookingDetails.getIsFeedBack()==0) {
@@ -73,10 +80,8 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
 
                     // Lấy ngày đến (destinationDate) của chuyến xe
                     String tripDestinationDate = tripInfo.getDestinationDate(); // Ngày đến của chuyến xe (dd/MM/yyyy)
-
                     // Chuyển đổi destinationDate thành milliseconds (chỉ tính ngày)
                     long tripDestinationDateInMillis = convertToMillis(tripDestinationDate);
-
                     // Lấy thời gian hiện tại và chỉ lấy phần ngày
                     long currentDateInMillis = System.currentTimeMillis();
                     // Đảm bảo rằng giờ, phút, giây được đặt về 0 để chỉ so sánh ngày
@@ -106,6 +111,39 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
                             .show();
                 }
             });
+
+            btnHuyVe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Tạo AlertDialog để xác nhận hủy vé
+                    new AlertDialog.Builder(MyTicketDetailsActivity.this)
+                            .setTitle("Xác nhận hủy vé")  // Tiêu đề của dialog
+                            .setMessage("Bạn có chắc chắn muốn hủy vé này không? Bạn có thể hủy vé trong vòng 24h")  // Nội dung thông báo
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Khi người dùng nhấn "Có", thực hiện xóa vé
+                                    MyDataBase myDataBase = new MyDataBase(getApplicationContext());
+                                    if (myDataBase.deleteTripBookingDetails(tripBookingDetails.getTripBookingDetailsID())) {
+                                        // Thông báo xóa thành công (hoặc thực hiện hành động khác nếu cần)
+                                        Toast.makeText(getApplicationContext(), "Hủy vé thành công", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        // Thông báo thất bại nếu không thể xóa
+                                        Toast.makeText(getApplicationContext(), "Có lỗi xảy ra, không thể hủy vé", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Khi người dùng nhấn "Không", chỉ đóng dialog mà không làm gì
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();  // Hiển thị Dialog
+                }
+            });
         }
     }
 
@@ -118,6 +156,45 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
             return 0; // Nếu lỗi trong quá trình phân tích, trả về 0
+        }
+    }
+
+    public void checkCancelTicket(String bookingTimeString) {
+        // Lấy thời gian hiện tại
+        long currentTimeMillis = System.currentTimeMillis();
+
+        // Kết hợp bookingDate và bookingTime thành chuỗi đầy đủ để tính toán chính xác
+        String bookingDateTimeString = tripBookingDetails.getBookingDate() + " " + bookingTimeString;  // Ví dụ: "16/12/2024 08:11"
+
+        // Chuyển chuỗi thành milliseconds
+        long bookingDateTimeInMillis = convertToMillisWithTime(bookingDateTimeString);
+
+        // Tính toán sự khác biệt giữa thời gian hiện tại và thời gian đặt vé
+        long diffInMillis = currentTimeMillis - bookingDateTimeInMillis;
+
+        // Kiểm tra nếu thời gian đặt vé trong vòng 24 giờ
+        if (diffInMillis <= 24 * 60 * 60 * 1000) { // 24 giờ = 24 * 60 * 60 * 1000 milliseconds
+            // Hiển thị nút hủy vé
+            btnHuyVe.setVisibility(View.VISIBLE);  // Hiển thị nút hủy vé
+        } else {
+            // Ẩn nút hủy vé
+            btnHuyVe.setVisibility(View.GONE);  // Ẩn nút hủy vé
+        }
+    }
+
+    public long convertToMillisWithTime(String dateTimeString) {
+        try {
+            // Định dạng ngày giờ đầy đủ
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+
+            // Chuyển chuỗi thành đối tượng Date
+            Date date = dateFormat.parse(dateTimeString);
+
+            // Trả về thời gian tính bằng milliseconds
+            return date != null ? date.getTime() : 0;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;  // Nếu có lỗi trong quá trình phân tích, trả về 0
         }
     }
 }

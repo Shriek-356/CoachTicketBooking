@@ -24,6 +24,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coachticketbookingapp.Object.PopularTripInfo;
 import com.example.coachticketbookingapp.Object.TripInfo;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
@@ -61,7 +62,7 @@ public class HomePageFragment extends Fragment {
     private User thisUser;
     private View view;
     private Button btnTimKiemChuyenDi,btntest;
-    private List<TripInfo> comingUpTripInfo = new ArrayList<>();
+    private List<PopularTripInfo> popularTripInfos = new ArrayList<>();
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +74,6 @@ public class HomePageFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerviewComingUp);
         txvHello=view.findViewById(R.id.txvHello);
         btnTimKiemChuyenDi=view.findViewById(R.id.btnTimKiemChuyenDi);
-        btntest=view.findViewById(R.id.button2);
         editTextNoiXuatPhat = view.findViewById(R.id.editTextNoiXuatPhat);
         editTextNoiDen = view.findViewById(R.id.editTextNoiDen);
         editTextNgayDi = view.findViewById(R.id.editTextNgayDi);
@@ -89,9 +89,9 @@ public class HomePageFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);//Dieu chinh cach hien thi
         recyclerView.setLayoutManager(layoutManager);
 
-        comingUpTripInfo = myDataBase.getTop5UpcomingTrips();
+        popularTripInfos = myDataBase.getPopularTrips();
 
-        ComingUpTripInfoAdapter comingUpTripInfoAdapter = new ComingUpTripInfoAdapter(getContext(),comingUpTripInfo);
+        ComingUpTripInfoAdapter comingUpTripInfoAdapter = new ComingUpTripInfoAdapter(getContext(),popularTripInfos);
         recyclerView.setAdapter(comingUpTripInfoAdapter);
 
 
@@ -139,13 +139,17 @@ public class HomePageFragment extends Fragment {
                 String ngayDi = editTextNgayDi.getText().toString().trim();
                 dsTrip= myDataBase.FoundTrip(noiXuatPhat,noiDen,ngayDi);
 
+                if(!editTextNgayVe.getText().toString().isEmpty()){
+                   String ngayVe = editTextNgayVe.getText().toString().trim();
+                   List<TripInfo> dsTripVe = myDataBase.FoundTrip(noiDen,noiXuatPhat,ngayVe);
+                   dsTrip.addAll(dsTripVe);
+                }
                 //Truyen dsTrip va User
                 Intent intent = new Intent (getActivity(), TripListFoundActivity.class);
                 intent.putExtra("thisuser",thisUser);
                 intent.putExtra("dsTrip", (Serializable) dsTrip);
                 startActivity(intent);
             }
-
         });
 
 
@@ -192,7 +196,6 @@ public class HomePageFragment extends Fragment {
                 "Tây Ninh", "Đồng Tháp", "Nha Trang"
         );
 
-        // Sắp xếp danh sách các tỉnh theo thứ tự alphabet
         Collections.sort(provinces);
 
         // Trả về danh sách đã được sắp xếp

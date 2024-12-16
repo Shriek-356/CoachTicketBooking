@@ -20,8 +20,11 @@ import com.example.coachticketbookingapp.Api.CreateOrder;
 import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
+import java.util.Date;
 
 import org.json.JSONObject;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import DataBase.MyDataBase;
 import vn.zalopay.sdk.Environment;
@@ -120,9 +123,24 @@ public class PaymentMethodActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Xử lý thanh toán trực tiếp
                         MyDataBase myDataBase = new MyDataBase(getApplicationContext());
-                        myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail());
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        String currentTime = sdf.format(new Date());
+
+                        myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail(),currentTime);
+
                         myDataBase.updateTicketAvailability(trip.getTripId(),ticketQuantity);
+
                         myDataBase.deleteTrippingCart(user.getUserID(), trip.getTripId());
+
+                        int id = myDataBase.getTripBookingDetailsID(trip.getTripId(),user.getUserID(),trip.getBookingDate(),currentTime);
+
+                        /*Date currentDateObj = new Date();  // Lấy thời gian hiện tại
+                        // Chuyển đổi thời gian thành chuỗi theo định dạng dd/MM/yyyy
+                        SimpleDateFormat sdff = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                        String currentDate = sdff.format(currentDateObj);*/
+
+                        myDataBase.addPayment("Thanh Toán Tiền Mặt",trip.getBookingDate(),id);
+
                         Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
                         intent.putExtra("user",user);

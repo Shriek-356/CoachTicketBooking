@@ -46,6 +46,7 @@ public class MainUIActivity extends AppCompatActivity {
             homePageFragment.setArguments(bundle);
             myTicketFragment.setArguments(bundle);
             myCartFragment.setArguments(bundle);
+            myAccountFragment.setArguments(bundle);
 
         }
         replaceFragment(homePageFragment);//Dat mac dinh la homepage

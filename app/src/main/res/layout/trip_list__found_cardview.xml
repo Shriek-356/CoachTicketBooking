@@ -113,10 +113,10 @@
 
         <TextView
             android:id="@+id/txvTicketLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="254dp"
+            android:layout_height="64dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="40dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Địa điểm đi"

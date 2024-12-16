@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MyAccountFragment">
+    tools:context=".ui.MyAccountFragment"
+    android:theme="@style/Theme.AppCompat.Light"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -17,69 +19,57 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- ImageView -->
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="127dp"
-                android:layout_height="106dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/accounticon" />
-
-            <!-- LinearLayout for Buttons -->
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="match_parent"/>
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/buttonContainer"
         android:layout_width="401dp"
         android:layout_height="317dp"
+        android:background="@color/material_dynamic_neutral90"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/cardView3"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
+        tools:ignore="MissingConstraints">
 
         <Button
             android:id="@+id/btnTaiKhoan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Tài khoản"
+            android:background="@android:drawable/editbox_background"
             android:drawableLeft="@drawable/baseline_account_circle_24"
-            android:gravity="start"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
             android:drawablePadding="10dp"
-            android:background="@color/cyan"
-            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+            android:gravity="start"
+            android:text="Tài khoản"
+            android:textColor="#6D4C41" />
 
         <Button
             android:id="@+id/btnQuanLy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Quản lý"
+            android:background="@android:drawable/editbox_background"
             android:drawableLeft="@drawable/baseline_lock_24"
-            android:gravity="start"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
             android:drawablePadding="10dp"
-            android:background="@color/cyan"
-            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+            android:gravity="start"
+            android:text="Quản lý"
+            android:textColor="#6D4C41" />
 
         <Button
             android:id="@+id/btnDangXuat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Đăng xuất"
+            android:background="@android:drawable/editbox_background"
             android:drawableLeft="@drawable/baseline_login_24"
-            android:gravity="start"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
             android:drawablePadding="10dp"
-            android:background="@color/cyan"
-            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
+            android:gravity="start"
+            android:text="Đăng xuất"
+            android:textColor="#6D4C41" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

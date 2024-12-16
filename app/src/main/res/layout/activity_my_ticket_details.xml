@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/opalescent"
     tools:context=".ui.MyTicketDetailsActivity"
-    android:paddingBottom="55dp"
+    android:paddingBottom="20dp"
     >
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -340,18 +340,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="66dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/bus" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="81dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="164dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:src="@drawable/bus" />
 
     <Button
         android:id="@+id/btnDanhGia"
@@ -363,5 +363,17 @@
         android:text="Đánh giá"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
+    <Button
+        android:id="@+id/btnHuyVe"
+        android:layout_width="85dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="160dp"
+        android:background="@drawable/edittext_background"
+        android:text="Hủy vé"
+        android:textColor="@color/design_default_color_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDanhGia" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

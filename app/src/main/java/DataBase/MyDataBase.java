@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.coachticketbookingapp.Object.FeedBack;
+import com.example.coachticketbookingapp.Object.PopularTripInfo;
 import com.example.coachticketbookingapp.Object.TripBookingDetails;
 import com.example.coachticketbookingapp.Object.TripInfo;
 import com.example.coachticketbookingapp.Object.TrippingCart;
@@ -18,9 +19,12 @@ import com.example.coachticketbookingapp.ui.BusTripInfo;
 import com.example.coachticketbookingapp.ui.CoachTripInfo;
 import com.example.coachticketbookingapp.ui.Userr;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class MyDataBase extends SQLiteOpenHelper {
@@ -94,6 +98,7 @@ public class MyDataBase extends SQLiteOpenHelper {
     public static String tbTripBookingDetails_UserId = "UserID";
     public static String tbTripBookingDetails_TripBookingDetailsId = "TripBookingDetailsID";
     public static String tbTripBookingDetails_BookingDate = "BookingDate";
+    public static String tbTripBookingDetails_BookingTime = "BookingTime";
     public static String tbTripBookingDetails_TicketQuantity = "TicketQuantity";
     public static String tbTripBookingDetails_TotalPrice = "TotalPrice";
     public static String tbTripBookingDetails_FullName ="FullName";
@@ -155,6 +160,7 @@ public class MyDataBase extends SQLiteOpenHelper {
                 + tbTripBookingDetails_UserId + " INTEGER, "
                 + tbTripBookingDetails_TripId + " INTEGER, "
                 + tbTripBookingDetails_BookingDate + " DATETIME, "
+                + tbTripBookingDetails_BookingTime + " TEXT, "
                 + tbTripBookingDetails_TicketQuantity + " INTEGER, "
                 + tbTripBookingDetails_TotalPrice + " DOUBLE, "
                 + tbTripBookingDetails_FullName + " TEXT, "
@@ -297,12 +303,13 @@ public class MyDataBase extends SQLiteOpenHelper {
     }
 
     //Ham them thong tin ve khi nguoi dung dat ve;
-    public void addTripBookingDetails(int userId, int tripId, String bookingDate, int ticketQuantity, double totalPrice,String fullName, String phoneNumber,String email){
+    public void addTripBookingDetails(int userId, int tripId, String bookingDate, int ticketQuantity, double totalPrice,String fullName, String phoneNumber,String email, String bookingTime){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(tbTripBookingDetails_UserId,userId);
         contentValues.put(tbTripBookingDetails_TripId,tripId);
         contentValues.put(tbTripBookingDetails_BookingDate,bookingDate);
+        contentValues.put(tbTripBookingDetails_BookingTime,bookingTime);
         contentValues.put(tbTripBookingDetails_TicketQuantity,ticketQuantity);
         contentValues.put(tbTripBookingDetails_TotalPrice,totalPrice);
         contentValues.put(tbTripBookingDetails_FullName,fullName);
@@ -318,6 +325,7 @@ public class MyDataBase extends SQLiteOpenHelper {
     public List<TripInfo> FoundTrip(String departure, String destination, String departuredate) {
         List<TripInfo> tripList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+
 
         // Câu truy vấn SQL để lấy tất cả các chuyến đi có Departure và Destination khớp
         String query = "SELECT * FROM " + tbTripInfo +
@@ -513,7 +521,6 @@ public class MyDataBase extends SQLiteOpenHelper {
 
         String query = "SELECT * FROM " + tbUser + " WHERE " + tbUser_Email + " = ? AND " + tbUser_Password + " = ? AND " + tbUser_Role + " = ?";
         String[] selectionArgs = new String[]{username, password, "admin"};
-
         Cursor cursor = db.rawQuery(query, selectionArgs);
 
         boolean isAdmin = cursor.getCount() > 0;
@@ -996,7 +1003,7 @@ public class MyDataBase extends SQLiteOpenHelper {
         List<TripBookingDetails> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();//Mo csdl
         //Cau truy van
-        String query = "SELECT a.TripID, b.TripBookingDetailsID,a.Departure,a.Destination, a.FirstLocation, a.SecondLocation, b.BookingDate, a.DepartureTime, a.DepartureDate, a.Price, a.Distance, b.TicketQuantity, b.TotalPrice, b.IsFeedBack "
+        String query = "SELECT a.TripID, b.TripBookingDetailsID,a.Departure,a.Destination, a.FirstLocation, a.SecondLocation, b.BookingDate, a.DepartureTime, a.DepartureDate, a.Price, a.Distance, b.TicketQuantity, b.TotalPrice, b.IsFeedBack, b.BookingTime "
                 + "FROM TripInfo a JOIN TripBookingDetails b "
                 + "On a.TripID = b.TripID "
                 + "WHERE b.UserID = ?";
@@ -1019,7 +1026,8 @@ public class MyDataBase extends SQLiteOpenHelper {
                 int ticketQuantity = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_TicketQuantity));
                 double totalPrice = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_TotalPrice));
                 int isFeedBack = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_IsFeedBack));
-                TripBookingDetails tripBookingDetails = new TripBookingDetails(tripID,tripBookingDetailsId,departure,destination,firstLocation,secondLocation,bookingDate,departureTime,departureDate,price,distance,ticketQuantity,totalPrice,isFeedBack);
+                String bookingTime = cursor.getString(cursor.getColumnIndex(tbTripBookingDetails_BookingTime));
+                TripBookingDetails tripBookingDetails = new TripBookingDetails(tripID,tripBookingDetailsId,departure,destination,firstLocation,secondLocation,bookingDate,departureTime,departureDate,price,distance,ticketQuantity,totalPrice,isFeedBack,bookingTime);
                 list.add(tripBookingDetails);
             }while (cursor.moveToNext());
         }
@@ -1071,7 +1079,6 @@ public class MyDataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(tbTrippingCart_TicketQuantity,ticketQuantity);
         values.put(tbTrippingCart_TotalPrice,totalPrice);
-
         db.update(tbTrippingCart,values,tbTrippingCart_TripId + " = ? AND " + tbTrippingCart_UserId + " = ? ",new String[]{String.valueOf(tripID),String.valueOf(userID)});
         db.close();
     }
@@ -1197,6 +1204,8 @@ public class MyDataBase extends SQLiteOpenHelper {
         db.close();
     }
 
+
+
     public void deleteTrippingCart(int userId, int tripId) {
         SQLiteDatabase db = this.getWritableDatabase();
         // Điều kiện để xóa dữ liệu
@@ -1288,98 +1297,102 @@ public class MyDataBase extends SQLiteOpenHelper {
     }
 
 
+
     @SuppressLint("Range")
-    public List<TripInfo> getTop5UpcomingTrips() {
-        List<TripInfo> upcomingTrips = new ArrayList<>();
-        Set<String> seenTrips = new HashSet<>(); // Sử dụng HashSet để loại bỏ các chuyến trùng lặp
+    public String getCoachBrandById(int CoachID){
+
         SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + tbCoach_CoachBrand
+                + " FROM " + tbCoach
+                + " WHERE " + tbCoach_CoachID + " = ?";
+        String name ="";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(CoachID)});
 
-        // Truy vấn lấy các chuyến xe gần nhất có ngày khởi hành từ hiện tại trở đi
-        String query = "SELECT * FROM " + tbTripInfo + " " +
-                "WHERE " + tbTripInfo_DepartureDate + " >= date('now') " + // So sánh ngày khởi hành trực tiếp với ngày hiện tại
-                "ORDER BY " + tbTripInfo_DepartureDate + " ASC"; // Sắp xếp theo ngày khởi hành gần nhất
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                // Lấy thông tin từ cursor và tạo đối tượng TripInfo
-                int tripID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TripId));
-                String departure = cursor.getString(cursor.getColumnIndex(tbTripInfo_Departure));
-                String destination = cursor.getString(cursor.getColumnIndex(tbTripInfo_Destination));
-
-                // Kiểm tra xem chuyến xe có trùng điểm đi và điểm đến không
-                String tripKey = departure + "-" + destination; // Cặp điểm đi và điểm đến tạo thành khóa duy nhất
-                if (!seenTrips.contains(tripKey)) {
-                    seenTrips.add(tripKey); // Thêm vào Set để đánh dấu chuyến đã xem
-
-                    int coachID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_CoachID));
-                    String firstLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_FirstLocation));
-                    String secondLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_SecondLocation));
-                    String departureTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureTime));
-                    String departureDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureDate));
-                    String destinationTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationTime));
-                    String destinationDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationDate));
-                    int ticketAvailable = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TicketAvailable));
-                    double price = cursor.getDouble(cursor.getColumnIndex(tbTripInfo_Price));
-                    int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
-
-                    // Tạo đối tượng TripInfo và thêm vào danh sách
-                    TripInfo tripInfo = new TripInfo(tripID, coachID, firstLocation, secondLocation, departure, destination,
-                            departureTime, departureDate, destinationTime, destinationDate, ticketAvailable, price, distance);
-                    upcomingTrips.add(tripInfo);
-
-                    // Dừng nếu đã đủ 5 chuyến
-                    if (upcomingTrips.size() == 5) {
-                        break;
-                    }
-                }
-            } while (cursor.moveToNext());
+        if(cursor!=null&&cursor.moveToFirst()){
+             name =cursor.getString(cursor.getColumnIndex(tbCoach_CoachBrand));
         }
-
         cursor.close();
-        return upcomingTrips;
+        db.close();
+        return name;
     }
 
-
-
-
+    //Lấy tổng lượt đánh giá của điểm đến và điểm đi
     @SuppressLint("Range")
-    public List<TripInfo> getTop5Trips() {
-        List<TripInfo> trips = new ArrayList<>();
+    public List<PopularTripInfo> getPopularTrips() {
         SQLiteDatabase db = this.getReadableDatabase();
+        List<PopularTripInfo> trips = new ArrayList<>();
 
-        // Truy vấn lấy 5 chuyến xe bất kỳ từ bảng TripInfo
-        String query = "SELECT * FROM " + tbTripInfo + " LIMIT 5"; // Lấy 5 chuyến xe đầu tiên
+        String query = "SELECT ti.TripID, ti.FirstLocation, ti.SecondLocation, ti.Departure, ti.Destination, " +
+                "COUNT(f.FeedBackID) AS RatingCount " +
+                "FROM FeedBack f " +
+                "JOIN TripInfo ti ON f.TripID = ti.TripID " +
+                "GROUP BY ti.Departure, ti.Destination " +
+                "ORDER BY RatingCount DESC " +
+                "LIMIT 5";
 
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
-                int tripID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TripId));
-                String departure = cursor.getString(cursor.getColumnIndex(tbTripInfo_Departure));
-                String destination = cursor.getString(cursor.getColumnIndex(tbTripInfo_Destination));
-                int coachID = cursor.getInt(cursor.getColumnIndex(tbTripInfo_CoachID));
-                String firstLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_FirstLocation));
-                String secondLocation = cursor.getString(cursor.getColumnIndex(tbTripInfo_SecondLocation));
-                String departureTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureTime));
-                String departureDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DepartureDate));
-                String destinationTime = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationTime));
-                String destinationDate = cursor.getString(cursor.getColumnIndex(tbTripInfo_DestinationDate));
-                int ticketAvailable = cursor.getInt(cursor.getColumnIndex(tbTripInfo_TicketAvailable));
-                double price = cursor.getDouble(cursor.getColumnIndex(tbTripInfo_Price));
-                int distance = cursor.getInt(cursor.getColumnIndex(tbTripInfo_Distance));
+                int tripId = cursor.getInt(cursor.getColumnIndex("TripID"));
+                String firstLocation = cursor.getString(cursor.getColumnIndex("FirstLocation"));
+                String secondLocation = cursor.getString(cursor.getColumnIndex("SecondLocation"));
+                String departure = cursor.getString(cursor.getColumnIndex("Departure"));
+                String destination = cursor.getString(cursor.getColumnIndex("Destination"));
+                int ratingCount = cursor.getInt(cursor.getColumnIndex("RatingCount"));
 
-                // Tạo đối tượng TripInfo và thêm vào danh sách
-                TripInfo tripInfo = new TripInfo(tripID, coachID, firstLocation, secondLocation, departure, destination,
-                        departureTime, departureDate, destinationTime, destinationDate, ticketAvailable, price, distance);
-                trips.add(tripInfo);
+                // Tạo đối tượng PopularTripInfo và thêm vào danh sách
+                PopularTripInfo trip = new PopularTripInfo(tripId, firstLocation, secondLocation, departure, destination, ratingCount);
+                trips.add(trip);
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         return trips;
     }
+
+    public boolean deleteTripBookingDetails(int bookingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Xóa vé trong bảng tbTripBookingDetails dựa trên TripBookingDetailsId
+        String whereClause = tbTripBookingDetails_TripBookingDetailsId + " = ?";
+        String[] whereArgs = new String[] { String.valueOf(bookingId) };
+
+        int rowsAffected = db.delete(tbTripBookingDetails, whereClause, whereArgs);
+
+        return rowsAffected > 0;  // Trả về true nếu có ít nhất 1 bản ghi bị xóa
+    }
+
+    public void addPayment(String paymentMethod, String date, int tripBookingDetailsID ){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(tbPayment_PaymentMethod,paymentMethod);
+        values.put(tbPayment_Date,date);
+        values.put(tbPayment_TripBookingDetailsID,tripBookingDetailsID);
+        db.insert(tbPayment,null,values);
+    }
+
+    @SuppressLint("Range")
+    public int getTripBookingDetailsID(int tripID, int userID, String bookingDate, String bookingTime){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + tbTripBookingDetails_TripBookingDetailsId
+                + " FROM " + tbTripBookingDetails
+                + " WHERE " + tbTripBookingDetails_TripId + " = ? "
+                + " AND " + tbTripBookingDetails_UserId + " = ? "
+                + " AND " + tbTripBookingDetails_BookingDate + " = ? "
+                + " AND " + tbTripBookingDetails_BookingTime + " = ? ";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tripID),String.valueOf(userID),bookingDate,bookingTime});
+        int id =0;
+        if(cursor!=null&& cursor.moveToFirst()){
+            id = cursor.getInt(cursor.getColumnIndex(tbTripBookingDetails_TripBookingDetailsId));
+        }
+        cursor.close();
+        db.close();
+        return id;
+    }
+
 
 }
 

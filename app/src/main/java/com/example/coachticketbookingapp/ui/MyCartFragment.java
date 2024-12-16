@@ -26,6 +26,7 @@ public class MyCartFragment extends Fragment {
     MyDataBase myDataBase;
     User thisUser;
     RecyclerView recyclerView;
+    CartAdapter cartAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +49,9 @@ public class MyCartFragment extends Fragment {
         }
         if(thisUser!=null) {
             dsTrippingCarts=myDataBase.getTrippingCartList(thisUser.getUserID());
-            for (TrippingCart item : dsTrippingCarts) {
-                Toast.makeText(getContext(),String.valueOf(item.getTripID()),Toast.LENGTH_SHORT).show();
-            }
         }
 
-        CartAdapter cartAdapter = new CartAdapter(getContext());
+        cartAdapter = new CartAdapter(getContext());
         cartAdapter.setData(dsTrippingCarts,thisUser);
         recyclerView=view_cart.findViewById(R.id.recycleview_cart_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -62,4 +60,5 @@ public class MyCartFragment extends Fragment {
 
         return view_cart;
     }
+
 }

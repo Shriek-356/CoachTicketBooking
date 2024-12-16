@@ -50,13 +50,7 @@ public class BookingUserInfoActivity extends AppCompatActivity {
         tripInfo = (TripInfo) intent.getSerializableExtra("tripinfoo");
         ticketQuantity = (Integer)intent.getSerializableExtra("ticketQuantity");
 
-        if(user!=null){
-            Toast.makeText(getApplicationContext(),user.getUserName(),Toast.LENGTH_LONG).show();
 
-        }
-        if(tripInfo!=null){
-            Toast.makeText(getApplicationContext(),tripInfo.getDeparture(),Toast.LENGTH_LONG).show();
-        }
         spinnerSoLuongVe=findViewById(R.id.spinnerSoLuongVe);
         setupTicketQuantitySpinner();
         if(ticketQuantity>0){
@@ -102,7 +96,7 @@ public class BookingUserInfoActivity extends AppCompatActivity {
 
                 boolean isValid = true;
                 // Kiểm tra họ tên
-                if (fullName.isEmpty()) {
+                if (fullName.isEmpty()||fullName=="") {
                     textView56.setVisibility(View.VISIBLE);  // Hiển thị thông báo lỗi
                     isValid = false;
                 } else {
@@ -110,7 +104,7 @@ public class BookingUserInfoActivity extends AppCompatActivity {
                 }
 
                 // Kiểm tra email
-                if (email.isEmpty() || !isValidEmail(email)) {
+                if (email.isEmpty() || !isValidEmail(email) || email=="") {
                     textView55.setVisibility(View.VISIBLE);  // Hiển thị thông báo lỗi
                     isValid = false;
                 } else {

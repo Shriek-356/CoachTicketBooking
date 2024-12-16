@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
 /**
@@ -19,6 +21,7 @@ import com.example.coachticketbookingapp.R;
  */
 public class MyAccountFragment extends Fragment {
 
+    private User user;
     // Parameter arguments
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -28,20 +31,12 @@ public class MyAccountFragment extends Fragment {
     private String mParam2;
 
     private Button btnQuanLy;
-    private Button btnDangXuat;
+    private Button btnDangXuat,btnTaiKhoan;
 
     public MyAccountFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyAccountFragment.
-     */
     public static MyAccountFragment newInstance(String param1, String param2) {
         MyAccountFragment fragment = new MyAccountFragment();
         Bundle args = new Bundle();
@@ -68,7 +63,7 @@ public class MyAccountFragment extends Fragment {
 
         btnQuanLy = rootView.findViewById(R.id.btnQuanLy);
         btnDangXuat = rootView.findViewById(R.id.btnDangXuat);
-
+        btnTaiKhoan = rootView.findViewById(R.id.btnTaiKhoan);
         btnQuanLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,13 +72,33 @@ public class MyAccountFragment extends Fragment {
             }
         });
 
+
+
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
+
+        Bundle bundle = getArguments();
+
+        user = (User) bundle.getSerializable("user");
+
+        btnTaiKhoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user!=null){
+                    Intent intent = new Intent(getActivity(), UpdateUserInfoActivity.class);
+                    intent.putExtra("user",user);
+                    startActivity(intent);
+                }
+            }
+        });
+
 
         return rootView;
     }

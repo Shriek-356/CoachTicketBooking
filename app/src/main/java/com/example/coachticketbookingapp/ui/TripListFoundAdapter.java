@@ -68,7 +68,8 @@ public class TripListFoundAdapter extends RecyclerView.Adapter<TripListFoundAdap
         else{
             List<Float> dsRate = myDataBase.getListRate(tripInfo.getCoachID());
             int quantityFeedBack = dsRate.size();
-            holder.txvAvgRate.setText(String.valueOf(totalRate)+" (" + String.valueOf(quantityFeedBack)+") ");
+            String formattedRate = String.format(Locale.getDefault(), "%.1f", totalRate);
+            holder.txvAvgRate.setText(formattedRate +" (" + String.valueOf(quantityFeedBack)+") ");
         }
         // Set sự kiện click cho item
         holder.itemView.setOnClickListener(v -> {
