@@ -1393,7 +1393,45 @@ public class MyDataBase extends SQLiteOpenHelper {
         return id;
     }
 
+    public boolean updateUser(int userID, String userName, String email, String phone){
+        int rowsAffected = 0;
+        SQLiteDatabase db = null;
+        try {
+            db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(tbUser_UserName, userName);
+            values.put(tbUser_Email, email);
+            values.put(tbUser_Phone, phone);
 
+            rowsAffected = db.update(tbUser, values, tbUser_UserId + " = ? ", new String[]{String.valueOf(userID)});
+            db.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        db.close();
+        return rowsAffected > 0;
+    }
+
+    public boolean isUpdateLoginExist(String email, String phone){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + tbUser_UserId
+                + " FROM " + tbUser
+                + " WHERE " + tbUser_Email + " = ? OR " + tbUser_Phone + " = ? ";
+
+        Cursor cursor = db.rawQuery(query, new String[]{email,phone});
+
+        if(cursor!=null&&cursor.moveToFirst()){
+            cursor.close();
+            db.close();
+            return false;
+        }
+
+        cursor.close();
+        db.close();
+        return true;
+    }
 }
 
 

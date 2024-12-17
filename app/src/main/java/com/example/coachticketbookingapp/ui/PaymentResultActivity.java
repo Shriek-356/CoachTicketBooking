@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
@@ -14,6 +17,10 @@ public class PaymentResultActivity extends AppCompatActivity {
 
     private Button btnBackToHome;
     private User user;
+    private TripBookingDetailsPayment trip;
+    private int result;
+    private ImageView imgResult;
+    private TextView txvAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +28,14 @@ public class PaymentResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_result);
 
         btnBackToHome = findViewById(R.id.btnBackToHome);
+        txvAmount = findViewById(R.id.txvAmount);
 
         Intent intent = getIntent();
         user = (User) intent.getSerializableExtra("user");
+        trip = (TripBookingDetailsPayment) intent.getSerializableExtra("trip");
+        result = (Integer) intent.getSerializableExtra("result");
 
+        txvAmount.setText(String.format("%0.f",trip.getTotalPrice()));
         // Thiết lập sự kiện cho nút "Quay lại trang chủ"
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override

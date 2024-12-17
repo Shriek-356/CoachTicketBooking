@@ -69,7 +69,10 @@
         <activity
             android:name=".ui.PaymentMethodActivity"
             android:exported="true"
-            tools:ignore="AppLinkUrlError">
+            tools:ignore="AppLinkUrlError"
+            android:label="Merchant Demo"
+            android:launchMode="singleTask"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

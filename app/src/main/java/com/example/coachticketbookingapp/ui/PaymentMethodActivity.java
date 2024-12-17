@@ -5,16 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coachticketbookingapp.Api.CreateOrder;
 import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
@@ -22,7 +17,6 @@ import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 import java.util.Date;
 
-import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -31,6 +25,9 @@ import vn.zalopay.sdk.Environment;
 import vn.zalopay.sdk.ZaloPayError;
 import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
+
+
+import org.json.JSONObject;
 
 public class PaymentMethodActivity extends AppCompatActivity {
 
@@ -50,15 +47,16 @@ public class PaymentMethodActivity extends AppCompatActivity {
         trip =(TripBookingDetailsPayment) intent.getSerializableExtra("tripinfo");
         ticketQuantity=(Integer)intent.getSerializableExtra("ticketquantity");
         user=(User)intent.getSerializableExtra("user");
+
+        String totalPrice = String.format("%.0f",trip.getTotalPrice());
+
         btnThanhToanTrucTiep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showConfirmationDialog();
             }
         });
-
-        /*btnThanhToanZl=findViewById(R.id.btnThanhToanZL);
-        String totalString=String.format("%.0f",total);
+        btnThanhToanZl=findViewById(R.id.btnThanhToanZL);
 
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -68,34 +66,65 @@ public class PaymentMethodActivity extends AppCompatActivity {
         ZaloPaySDK.init(2553, Environment.SANDBOX);
 
 
-        /*btnThanhToanZl.setOnClickListener(new View.OnClickListener() {
+         btnThanhToanZl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CreateOrder orderApi = new CreateOrder();
                 try {
-                    JSONObject data = orderApi.createOrder(totalString);
+                    JSONObject data = orderApi.createOrder(totalPrice);
                     String code = data.getString("return_code");
                     if (code.equals("1")) {
-
                         String token = data.getString("zp_trans_token");
                         ZaloPaySDK.getInstance().payOrder(PaymentMethodActivity.this, token, "demozpdk://app", new PayOrderListener() {
                             @Override
                             public void onPaymentSucceeded(String s, String s1, String s2) {
+                                // Xử lý thanh toán trực tiếp
+                                MyDataBase myDataBase = new MyDataBase(getApplicationContext());
+                                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                                String currentTime = sdf.format(new Date());
 
+                                myDataBase.addTripBookingDetails(trip.getUserId(),trip.getTripId(), trip.getBookingDate(), trip.getTicketQuantity(),trip.getTotalPrice(),trip.getFullName(), trip.getPhoneNumber(), trip.getEmail(),currentTime);
+
+                                myDataBase.updateTicketAvailability(trip.getTripId(),ticketQuantity);
+
+                                myDataBase.deleteTrippingCart(user.getUserID(), trip.getTripId());
+
+                                int id = myDataBase.getTripBookingDetailsID(trip.getTripId(),user.getUserID(),trip.getBookingDate(),currentTime);
+
+                                myDataBase.addPayment("Thanh Toán Tiền Mặt",trip.getBookingDate(),id);
+                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent.putExtra("result",1);
+                                intent.putExtra("user",user);
+                                intent.putExtra("trip",trip);
+                                startActivity(intent);
+                                finish();
                             }
 
                             @Override
                             public void onPaymentCanceled(String s, String s1) {
-
+                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent.putExtra("result",2);
+                                intent.putExtra("user",user);
+                                intent.putExtra("trip",trip);
+                                startActivity(intent);
+                                finish();
                             }
 
                             @Override
                             public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-
+                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent.putExtra("result",3);
+                                intent.putExtra("user",user);
+                                intent.putExtra("trip",trip);
+                                startActivity(intent);
+                                finish();
                             }
                         });
-                    }
 
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -103,7 +132,6 @@ public class PaymentMethodActivity extends AppCompatActivity {
             }
 
         });
-        */
 
     }
     @Override
@@ -134,15 +162,13 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
                         int id = myDataBase.getTripBookingDetailsID(trip.getTripId(),user.getUserID(),trip.getBookingDate(),currentTime);
 
-                        /*Date currentDateObj = new Date();  // Lấy thời gian hiện tại
-                        // Chuyển đổi thời gian thành chuỗi theo định dạng dd/MM/yyyy
-                        SimpleDateFormat sdff = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                        String currentDate = sdff.format(currentDateObj);*/
 
                         myDataBase.addPayment("Thanh Toán Tiền Mặt",trip.getBookingDate(),id);
 
                         Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                        intent.putExtra("result",0);
+                        intent.putExtra("trip",trip);
                         intent.putExtra("user",user);
                         startActivity(intent);
                         finish();
