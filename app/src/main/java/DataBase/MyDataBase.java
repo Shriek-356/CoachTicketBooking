@@ -520,13 +520,12 @@ public class MyDataBase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String query = "SELECT * FROM " + tbUser + " WHERE " + tbUser_Email + " = ? AND " + tbUser_Password + " = ? AND " + tbUser_Role + " = ?";
-        String[] selectionArgs = new String[]{username, password, "admin"};
+        String[] selectionArgs = new String[]{username, password, "Admin"};
         Cursor cursor = db.rawQuery(query, selectionArgs);
 
         boolean isAdmin = cursor.getCount() > 0;
         cursor.close();
         db.close();
-
         return isAdmin;
     }
 

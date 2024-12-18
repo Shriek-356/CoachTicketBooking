@@ -7,7 +7,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:weightSum="3"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.LoginActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,6 +83,8 @@
             android:ems="10"
             android:hint="@string/nh_p_email_c_a_b_n"
             android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView4" />
 
@@ -95,6 +98,7 @@
             android:hint="@string/nh_p_m_t_kh_u_c_a_b_n"
             android:inputType="textPassword"
             android:singleLine="true"
+            android:textColorHint="@color/black"
             app:boxStrokeColor="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edtEmail"
@@ -116,18 +120,20 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_weight="0.5"
+        android:background="@android:color/system_accent2_100">
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="28dp"
 
             android:text="@string/b_n_ch_a_c_t_i_kho_n"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -135,12 +141,13 @@
             android:id="@+id/txvLinkToReg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="28dp"
-            android:layout_marginEnd="44dp"
             android:text="@string/ng_k_ngay"
             android:textColor="@color/design_default_color_primary_dark"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

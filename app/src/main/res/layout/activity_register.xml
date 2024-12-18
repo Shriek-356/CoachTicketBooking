@@ -12,14 +12,14 @@
         android:id="@+id/txtLinkToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="36dp"
         android:layout_weight="1"
         android:linksClickable="true"
         android:text="@string/ng_nh_p_ngay"
         android:textColor="@color/design_default_color_primary_dark"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_marginTop="36dp"
         android:text="@string/b_n_c_t_i_kho_n"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
@@ -46,10 +46,11 @@
         android:ems="10"
         android:hint="@string/nh_p_s_i_n_tho_i"
         android:inputType="phone"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:singleLine="true" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/editTextText4"
@@ -63,11 +64,12 @@
         android:ems="10"
         android:hint="@string/nh_p_l_i_m_t_kh_u"
         android:inputType="text"
+        android:password="true"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:password="true"
-        android:singleLine="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/editTextText3"
@@ -81,11 +83,12 @@
         android:ems="10"
         android:hint="@string/nh_p_m_t_kh_u"
         android:inputType="text"
+        android:password="true"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:password="true"
-        android:singleLine="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/editTextText2"
@@ -99,10 +102,11 @@
         android:ems="10"
         android:hint="@string/nh_p_h_v_t_n_ng_i_d_ng"
         android:inputType="text"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:singleLine="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
@@ -132,10 +136,11 @@
         android:ems="10"
         android:hint="@string/nh_p_a_ch_email"
         android:inputType="text"
+        android:singleLine="true"
+        android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:singleLine="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView8"
@@ -157,6 +162,8 @@
         android:layout_marginEnd="40dp"
         android:minHeight="48dp"
         android:text="@string/nam"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/checkBox4"
         app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
@@ -169,6 +176,7 @@
         android:layout_marginEnd="100dp"
         android:minHeight="48dp"
         android:text="@string/n"
+        android:textColorHint="@color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText4" />

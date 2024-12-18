@@ -71,20 +71,25 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     if (mydb.checkLogin(email, password)) {
-                        User user = mydb.getUser(email);  // Lấy đối tượng User từ DB
+                        if(mydb.checkAdminLogin(email,password)) {
+                            Intent intentManage = new Intent(LoginActivity.this,Manage.class);
+                            startActivity(intentManage);
+                        }else {
+                            User user = mydb.getUser(email);  // Lấy đối tượng User từ DB
 
-                        if (user != null) {
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-
-                            // Truyền đối tượng User qua Intent
-                            Intent intentt = new Intent(LoginActivity.this, MainUIActivity.class);
-                            intentt.putExtra("user", user);  // Truyền User vào Intent
-                            startActivity(intentt);
-                            finish();  // Đóng activity hiện tại
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+                            if (user != null) {
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                // Truyền đối tượng User qua Intent
+                                Intent intentt = new Intent(LoginActivity.this, MainUIActivity.class);
+                                intentt.putExtra("user", user);  // Truyền User vào Intent
+                                startActivity(intentt);
+                                finish();  // Đóng activity hiện tại
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Không tìm thấy người dùng!", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    } else {
+                    }
+                    else {
                         Toast.makeText(LoginActivity.this, "Sai email hoặc mật khẩu!!!", Toast.LENGTH_SHORT).show();
                     }
                 }

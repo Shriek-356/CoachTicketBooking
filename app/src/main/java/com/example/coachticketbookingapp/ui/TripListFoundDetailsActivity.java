@@ -1,7 +1,6 @@
 package com.example.coachticketbookingapp.ui;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coachticketbookingapp.Object.TripInfo;
 import com.example.coachticketbookingapp.Object.TrippingCart;
@@ -31,7 +26,7 @@ import DataBase.MyDataBase;
 
 public class TripListFoundDetailsActivity extends AppCompatActivity {
     private TripInfo tripInfoo;
-    private TextView txvDiemBatDau, txvDiemDen, txvGioKhoiHanh, txvGioKetThuc, txvDiemDon, txvDiemTra, txvSoChoTrong, txvGiaTien,txvDetailsDeparture,txvDetailsTime;
+    private TextView txvDiemBatDau, txvDiemDen,txvNgayKhoiHanh, txvGioKhoiHanh, txvGioKetThuc, txvDiemDon, txvDiemTra, txvSoChoTrong, txvGiaTien;
     private Button btnDatVe;
     private User thisUser;
     private MyDataBase myDataBase;
@@ -54,8 +49,7 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         btnDatVe = findViewById(R.id.btnDatVe);
         btnThemVaoGioHang = findViewById(R.id.btnThemGioHang);
         btnXemDanhGia = findViewById(R.id.btnXemDanhGia);
-        txvDetailsDeparture = findViewById(R.id.txvDetailsDeparture);
-        txvDetailsTime = findViewById(R.id.txvDetailsTime);
+        txvNgayKhoiHanh = findViewById(R.id.txvNgayKhoiHanh);
 
 
         Intent intent = getIntent();
@@ -65,12 +59,11 @@ public class TripListFoundDetailsActivity extends AppCompatActivity {
         if(tripInfoo != null){
             txvDiemBatDau.setText(tripInfoo.getDeparture());
             txvDiemDen.setText(tripInfoo.getDestination());
-            txvGioKhoiHanh.setText(tripInfoo.getDepartureTime());
+            txvNgayKhoiHanh.setText(tripInfoo.getDepartureDate());
             txvGioKetThuc.setText(tripInfoo.getDestinationTime());
             txvDiemDon.setText(tripInfoo.getFirstLocation());
             txvDiemTra.setText(tripInfoo.getSecondLocation());
-            txvDetailsTime.setText(tripInfoo.getDepartureTime());
-            txvDetailsDeparture.setText(tripInfoo.getDeparture());
+            txvGioKhoiHanh.setText(tripInfoo.getDepartureTime());
             txvSoChoTrong.setText(String.valueOf(tripInfoo.getTicketAvailable()));
             NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
             txvGiaTien.setText(numberFormat.format(tripInfoo.getPrice()));

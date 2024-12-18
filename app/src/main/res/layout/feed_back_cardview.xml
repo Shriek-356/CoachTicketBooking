@@ -1,14 +1,15 @@
 <!-- item_feedback.xml -->
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="#00FFFF	"
     android:elevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#AFEEEE	"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -45,16 +46,17 @@
             android:id="@+id/feedback_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
             android:text="Feedback content"
-            android:textSize="14sp"
-            android:paddingBottom="8dp"/>
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
         <!-- RatingBar -->
         <RatingBar
             android:id="@+id/feedback_rating_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white_smoke"
+            android:background="#FFA07A"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5" />

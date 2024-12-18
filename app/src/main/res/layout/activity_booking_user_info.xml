@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#B0E0E6	"
     tools:context=".ui.booking_user_info">
 
     <TextView
@@ -43,6 +43,7 @@
         android:ems="10"
         android:hint="     Địa chỉ email người đi"
         android:inputType="text"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView55" />
 
@@ -56,6 +57,7 @@
         android:ems="10"
         android:hint="     Số điện thoại"
         android:inputType="text"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView54" />
 
@@ -113,6 +115,7 @@
         android:ems="10"
         android:hint="     Tên người đi"
         android:inputType="text"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView50" />
 

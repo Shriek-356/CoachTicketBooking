@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="20dp">
+    android:background="@color/white"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="263dp"
+        android:background="@color/white"
         android:padding="16dp">
 
         <TextView
@@ -20,6 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:text="Địa điểm đến"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imageView13"
             app:layout_constraintTop_toBottomOf="@+id/txvDeparture" />
@@ -78,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="Địa điểm xuất phát"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imageView12"
             app:layout_constraintTop_toTopOf="parent" />
@@ -120,6 +124,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Địa điểm đi"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/imvIcon"
             app:layout_constraintTop_toBottomOf="@+id/txvDestination" />
@@ -141,6 +146,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             android:text="TextView"
+            android:textColor="@color/black"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imvIcon" />

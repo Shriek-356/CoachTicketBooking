@@ -8,40 +8,26 @@
     android:paddingBottom="56dp"
     >
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EFF0FC"
         android:contentDescription="@string/app_name"
-        tools:layout_editor_absoluteX="117dp"
-        tools:layout_editor_absoluteY="27dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10">
-
-                <androidx.recyclerview.widget.RecyclerView
-
-                    android:id="@+id/recyclerviewComingUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
                 android:fontFamily="sans-serif"
                 android:text="Chuyến xe phổ biến"
                 android:textColor="@color/material_dynamic_neutral10"
@@ -50,10 +36,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
+            <androidx.recyclerview.widget.RecyclerView
+
+                android:id="@+id/recyclerviewComingUp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="404dp"
-                android:layout_height="525dp"
+                android:layout_width="405dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.428"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +88,7 @@
                         android:ems="10"
                         android:hint="     Ngày về"
                         android:inputType="text"
+                        android:textColorHint="@color/black"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextNgayDi" />
@@ -107,6 +104,8 @@
                         android:ems="10"
                         android:hint="     Ngày bắt đầu"
                         android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextNoiDen" />
 
@@ -121,6 +120,8 @@
                         android:ems="10"
                         android:hint="     Nhập điểm đến"
                         android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editTextNoiXuatPhat" />
 
@@ -134,6 +135,8 @@
                         android:ems="10"
                         android:hint="     Nhập điểm xuất phát"
                         android:inputType="text"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -200,9 +203,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
                     android:text="Xin Chào...."
-                    android:textSize="38sp"
+                    android:textColor="@color/black"
+                    android:textSize="28sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -234,6 +238,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,9 @@ import com.example.coachticketbookingapp.Object.TripBookingDetailsPayment;
 import com.example.coachticketbookingapp.Object.User;
 import com.example.coachticketbookingapp.R;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class PaymentResultActivity extends AppCompatActivity {
 
     private Button btnBackToHome;
@@ -20,7 +23,7 @@ public class PaymentResultActivity extends AppCompatActivity {
     private TripBookingDetailsPayment trip;
     private int result;
     private ImageView imgResult;
-    private TextView txvAmount;
+    private TextView txvAmount,txvSuccessTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,23 +32,41 @@ public class PaymentResultActivity extends AppCompatActivity {
 
         btnBackToHome = findViewById(R.id.btnBackToHome);
         txvAmount = findViewById(R.id.txvAmount);
+        txvSuccessTitle=findViewById(R.id.txvSuccessTitle);
+        imgResult = findViewById(R.id.imgSuccess);
 
         Intent intent = getIntent();
-        user = (User) intent.getSerializableExtra("user");
         trip = (TripBookingDetailsPayment) intent.getSerializableExtra("trip");
+        user = (User) intent.getSerializableExtra("user");
+
         result = (Integer) intent.getSerializableExtra("result");
 
-        txvAmount.setText(String.format("%0.f",trip.getTotalPrice()));
+        double totalPrice = trip.getTotalPrice();
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formattedPrice = currencyFormat.format(totalPrice);
+        txvAmount.setText(formattedPrice);
+
+        if(result==4){
+            txvSuccessTitle.setText("Đặt Vé Thành Công!!!");
+        }
+        else if(result==1){
+            txvSuccessTitle.setText("Đặt Vé và Thanh Toán Thành Công!!!");
+        }
+        else{
+            imgResult.setImageResource(R.drawable.errorimage);
+            txvSuccessTitle.setText("Có lỗi xảy ra, vui lòng thử lại");
+        }
+
         // Thiết lập sự kiện cho nút "Quay lại trang chủ"
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Quay lại trang chủ, ví dụ quay về MainActivity
-                Intent intent = new Intent(PaymentResultActivity.this, MainUIActivity.class);
+                Intent intent1 = new Intent(PaymentResultActivity.this, MainUIActivity.class);
                 // Xóa các Activity trước đó trong Stack để người dùng không quay lại trang thanh toán
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("user",user);
-                startActivity(intent);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra("user",user);
+                startActivity(intent1);
                 finish(); // Đảm bảo Activity này không còn trong stack sau khi quay lại trang chủ
             }
         });

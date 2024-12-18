@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/loginbackground"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CoachTicketBookingApp"
+        android:theme="@style/Base.Theme.CoachTicketBookingApp"
         tools:targetApi="31">
         <activity
             android:name=".ui.UpdateUserInfoActivity"

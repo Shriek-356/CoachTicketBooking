@@ -212,7 +212,7 @@ public class ManageTrip extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new android.app.AlertDialog.Builder(ManageTrip.this)
-                        .setMessage("Bạn có chắc chắn muốn thêm người dùng này không?")
+                        .setMessage("Bạn có chắc chắn muốn thêm chuyến xe này không?")
                         .setCancelable(false)
                         .setPositiveButton("Đồng ý", (dialog, id) -> {
                             addNewTrip();
@@ -231,7 +231,7 @@ public class ManageTrip extends AppCompatActivity {
                 // Cập nhật chuyến đi đã chọn
                 if (selectedTrip != null) {
                     new android.app.AlertDialog.Builder(ManageTrip.this)
-                            .setMessage("Bạn có chắc chắn muốn thêm người dùng này không?")
+                            .setMessage("Bạn có chắc chắn thay đổi chuyến xe này không?")
                             .setCancelable(false)
                             .setPositiveButton("Đồng ý", (dialog, id) -> {
                                 updateTrip(selectedTrip);
@@ -253,10 +253,11 @@ public class ManageTrip extends AppCompatActivity {
                 // Xóa chuyến đi đã chọn
                 if (selectedTrip != null) {
                     new android.app.AlertDialog.Builder(ManageTrip.this)
-                            .setMessage("Bạn có chắc chắn muốn thêm người dùng này không?")
+                            .setMessage("Bạn có chắc chắn muốn xóa chuyến xe này không?")
                             .setCancelable(false)
                             .setPositiveButton("Đồng ý", (dialog, id) -> {
                                 deleteTrip(selectedTrip);
+
                             })
                             .setNegativeButton("Thoát", (dialog, id) -> {
                                 dialog.dismiss();

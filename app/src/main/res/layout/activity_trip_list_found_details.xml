@@ -13,7 +13,7 @@
         android:layout_height="500dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="120dp"
-        android:background="@drawable/cardview_custom"
+        android:background="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,20 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="57dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="236dp"
+                android:src="@drawable/baseline_arrow_right_alt_24"
+                app:layout_constraintEnd_toStartOf="@+id/txvDiemDen"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/txvGioKhoiHanh"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnThemGioHang"
@@ -30,7 +43,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="80dp"
                 android:background="@drawable/buttonui"
-                android:text="Thêm Vào Giò Hàng"
+                android:text="Thêm Vào Giỏ Hàng"
                 android:textColor="@color/material_dynamic_neutral10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -70,6 +83,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Số lượng vé còn lại:"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvGioKhoiHanh" />
@@ -138,10 +152,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="60dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Điểm đón"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline5" />
@@ -150,11 +165,12 @@
                 android:id="@+id/txvDiemTra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="56dp"
-                android:layout_marginEnd="56dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="48dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="điểm trả"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline5" />
@@ -163,14 +179,14 @@
                 android:id="@+id/txvGioKetThuc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="28dp"
-                android:layout_marginEnd="56dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Giờ dự kiến kết thúc"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView11"
                 app:layout_constraintTop_toBottomOf="@+id/txvDiemTra" />
 
             <TextView
@@ -180,6 +196,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="144dp"
                 android:text="30"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvGioKetThuc" />
@@ -191,6 +208,7 @@
                 android:layout_marginTop="72dp"
                 android:layout_marginEnd="92dp"
                 android:text="100.000d"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvGioKetThuc" />
@@ -206,41 +224,39 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnXemDanhGia"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
+                android:layout_width="145dp"
+                android:layout_height="51dp"
                 android:layout_marginStart="112dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonui"
-                android:text="Xem đánh giá"
+                android:text="Xem Đánh Giá"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/txvDetailsDeparture"
+                android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="68dp"
-                android:text="TextView"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="61dp"
+                android:text="Ngày Khởi Hành"
                 android:textColor="@color/black"
-                android:textColorHighlight="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txvDiemBatDau" />
 
             <TextView
-                android:id="@+id/txvDetailsTime"
+                android:id="@+id/txvNgayKhoiHanh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="68dp"
-                android:layout_marginEnd="92dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="60dp"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toBottomOf="@+id/txvDiemDenn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

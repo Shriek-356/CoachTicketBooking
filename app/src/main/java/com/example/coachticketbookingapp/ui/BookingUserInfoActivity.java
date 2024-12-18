@@ -70,7 +70,11 @@ public class BookingUserInfoActivity extends AppCompatActivity {
         txvTamTinh=findViewById(R.id.txvTamTinh);
         btnXacNhanDatt=findViewById(R.id.btnXacNhanDatt);
         textView56 = findViewById(R.id.textView56);  // Email error message
-        textView55 = findViewById(R.id.textView55);  // Phone error message
+        textView55 = findViewById(R.id.textView55);// Phone error message
+
+        edtFullName.setText(user.getUserName());
+        edtPhone.setText(user.getPhone());
+        edtEmail.setText(user.getEmail());
 
         spinnerSoLuongVe.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

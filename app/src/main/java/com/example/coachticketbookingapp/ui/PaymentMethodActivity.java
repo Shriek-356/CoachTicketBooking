@@ -36,7 +36,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
     private double total=100000;
     private int ticketQuantity;
     private User user;
-    TripBookingDetailsPayment trip;
+    private TripBookingDetailsPayment trip;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class PaymentMethodActivity extends AppCompatActivity {
                 showConfirmationDialog();
             }
         });
+
         btnThanhToanZl=findViewById(R.id.btnThanhToanZL);
 
         StrictMode.ThreadPolicy policy = new
@@ -91,35 +92,35 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
                                 int id = myDataBase.getTripBookingDetailsID(trip.getTripId(),user.getUserID(),trip.getBookingDate(),currentTime);
 
-                                myDataBase.addPayment("Thanh Toán Tiền Mặt",trip.getBookingDate(),id);
-                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
-                                intent.putExtra("result",1);
-                                intent.putExtra("user",user);
-                                intent.putExtra("trip",trip);
-                                startActivity(intent);
+                                myDataBase.addPayment("Thanh Toán Zalo Pay",trip.getBookingDate(),id);
+                                Intent intent1 = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent1.putExtra("result",1);
+                                intent1.putExtra("user",user);
+                                intent1.putExtra("trip",trip);
+                                startActivity(intent1);
                                 finish();
                             }
 
                             @Override
                             public void onPaymentCanceled(String s, String s1) {
-                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
-                                intent.putExtra("result",2);
-                                intent.putExtra("user",user);
-                                intent.putExtra("trip",trip);
-                                startActivity(intent);
+                                Intent intent2 = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent2.putExtra("result",2);
+                                intent2.putExtra("user",user);
+                                intent2.putExtra("trip",trip);
+                                startActivity(intent2);
                                 finish();
                             }
 
                             @Override
                             public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-                                Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
-                                intent.putExtra("result",3);
-                                intent.putExtra("user",user);
-                                intent.putExtra("trip",trip);
-                                startActivity(intent);
+                                Intent intent3 = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                                intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                                intent3.putExtra("result",3);
+                                intent3.putExtra("user",user);
+                                intent3.putExtra("trip",trip);
+                                startActivity(intent3);
                                 finish();
                             }
                         });
@@ -165,12 +166,12 @@ public class PaymentMethodActivity extends AppCompatActivity {
 
                         myDataBase.addPayment("Thanh Toán Tiền Mặt",trip.getBookingDate(),id);
 
-                        Intent intent = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
-                        intent.putExtra("result",0);
-                        intent.putExtra("trip",trip);
-                        intent.putExtra("user",user);
-                        startActivity(intent);
+                        Intent intent4 = new Intent(PaymentMethodActivity.this,PaymentResultActivity.class);
+                        intent4.putExtra("trip",trip);
+                        intent4.putExtra("user",user);
+                        intent4.putExtra("result",4);
+                        intent4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Xóa tất cả các Activity trước đó
+                        startActivity(intent4);
                         finish();
                     }
                 })

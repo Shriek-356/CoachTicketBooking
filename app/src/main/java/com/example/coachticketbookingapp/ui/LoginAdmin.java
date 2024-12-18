@@ -56,7 +56,6 @@ public class LoginAdmin extends AppCompatActivity {
                     Toast.makeText(LoginAdmin.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 } else {
-
                     Toast.makeText(LoginAdmin.this, "Tên đăng nhập hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
                     finish();
                 }

@@ -30,7 +30,6 @@ public class MyAccountFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Button btnQuanLy;
     private Button btnDangXuat,btnTaiKhoan;
 
     public MyAccountFragment() {
@@ -61,18 +60,8 @@ public class MyAccountFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_account, container, false);
 
-        btnQuanLy = rootView.findViewById(R.id.btnQuanLy);
         btnDangXuat = rootView.findViewById(R.id.btnDangXuat);
         btnTaiKhoan = rootView.findViewById(R.id.btnTaiKhoan);
-        btnQuanLy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginAdmin.class);
-                startActivity(intent);
-            }
-        });
-
-
 
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
