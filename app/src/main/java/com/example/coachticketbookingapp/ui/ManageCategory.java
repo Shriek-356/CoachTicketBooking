@@ -262,6 +262,9 @@ public class ManageCategory extends AppCompatActivity {
                             .setCancelable(false)
                             .setPositiveButton("Đồng ý", (dialog, id) -> {
                                 deleteTrip(selectedTrip);
+                                deleteTrippingCart(selectedTrip);
+                                deleteTripBookingDetails(selectedTrip);
+
                             })
                             .setNegativeButton("Thoát", (dialog, id) -> {
                                 dialog.dismiss();
@@ -409,7 +412,7 @@ public class ManageCategory extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Lấy dữ liệu từ bảng TripInfo
-        Cursor cursor = db.rawQuery("SELECT Departure, Destination, DepartureTime, DepartureDate FROM TripInfo", null);
+        Cursor cursor = db.rawQuery("SELECT Departure, Destination, DepartureTime, DepartureDate, TripID FROM TripInfo", null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -417,8 +420,10 @@ public class ManageCategory extends AppCompatActivity {
                 @SuppressLint("Range") String destination = cursor.getString(cursor.getColumnIndex("Destination"));
                 @SuppressLint("Range") String departureTime = cursor.getString(cursor.getColumnIndex("DepartureTime"));
                 @SuppressLint("Range") String departureDate = cursor.getString(cursor.getColumnIndex("DepartureDate"));
-
-                tripInfoList.add(new Trip(departure, destination, departureTime, departureDate));
+                @SuppressLint("Range") int tripID = cursor.getInt(cursor.getColumnIndex("TripID"));
+                Trip trip = new Trip(departure, destination, departureTime, departureDate);
+                trip.setTripID(tripID);
+                tripInfoList.add(trip);
             } while (cursor.moveToNext());
         }
 
@@ -578,8 +583,8 @@ public class ManageCategory extends AppCompatActivity {
         MyDataBase dbHelper = new MyDataBase(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        String whereClause = "Departure = ? AND Destination = ?";
-        String[] whereArgs = new String[]{trip.getDeparture(), trip.getDestination()};
+        String whereClause = " TripID = ? ";
+        String[] whereArgs = new String[]{String.valueOf(trip.getTripID())};
 
         int result = db.delete("TripInfo", whereClause, whereArgs);
         if (result > 0) {
@@ -593,6 +598,25 @@ public class ManageCategory extends AppCompatActivity {
             Toast.makeText(this, "Xóa chuyến đi thất bại!", Toast.LENGTH_SHORT).show();
         }
 
+        db.close();
+    }
+
+    private void deleteTripBookingDetails(Trip trip) {
+        MyDataBase dbHelper = new MyDataBase(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String whereClause = " TripID = ? ";
+        String[] whereArgs = new String[]{String.valueOf(trip.getTripID())};
+        db.delete("TripBookingDetails", whereClause, whereArgs);
+        db.close();
+    }
+
+    private void deleteTrippingCart(Trip trip) {
+        MyDataBase dbHelper = new MyDataBase(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String whereClause = " TripID = ? ";
+        String[] whereArgs = new String[]{String.valueOf(trip.getTripID())};
+        db.delete("TrippingCart", whereClause, whereArgs);
         db.close();
     }
 

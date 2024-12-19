@@ -127,6 +127,10 @@ public class MyTicketDetailsActivity extends AppCompatActivity {
                                     if (myDataBase.deleteTripBookingDetails(tripBookingDetails.getTripBookingDetailsID())) {
                                         // Thông báo xóa thành công (hoặc thực hiện hành động khác nếu cần)
                                         Toast.makeText(getApplicationContext(), "Hủy vé thành công", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(MyTicketDetailsActivity.this,MainUIActivity.class);
+                                        intent.putExtra("user",myTicketDetailsActivityUser);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
                                         finish();
                                     } else {
                                         // Thông báo thất bại nếu không thể xóa

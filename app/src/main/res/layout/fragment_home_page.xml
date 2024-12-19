@@ -86,6 +86,7 @@
                         android:background="@drawable/edittext_background"
                         android:elevation="1dp"
                         android:ems="10"
+                        android:textColor="@color/black"
                         android:hint="     Ngày về"
                         android:inputType="text"
                         android:textColorHint="@color/black"

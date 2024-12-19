@@ -98,7 +98,7 @@ public class TicketStatisticTrip extends AppCompatActivity {
                 "FROM " + MyDataBase.tbTripInfo + " t " +
                 "LEFT JOIN " + MyDataBase.tbTripBookingDetails + " c " +
                 "ON t." + MyDataBase.tbTripInfo_TripId + " = c." + MyDataBase.tbTripBookingDetails_TripId + " " +
-                "GROUP BY t." + MyDataBase.tbTripInfo_TripId;
+                "GROUP BY t." + MyDataBase.tbTripInfo_Departure + " , t." +MyDataBase.tbTripInfo_Destination;
 
         Cursor cursor = db.rawQuery(query, null);
         statisticList.clear();
@@ -135,7 +135,7 @@ public class TicketStatisticTrip extends AppCompatActivity {
                 "ON t." + MyDataBase.tbTripInfo_TripId + " = c." + MyDataBase.tbTripBookingDetails_TripId + " " +
                 "WHERE t." + MyDataBase.tbTripInfo_Departure + " LIKE ? AND " +
                 "t." + MyDataBase.tbTripInfo_Destination + " LIKE ? " +
-                "GROUP BY t." + MyDataBase.tbTripInfo_TripId;
+                "GROUP BY t." + MyDataBase.tbTripInfo_Departure + ", t." + MyDataBase.tbTripInfo_Destination;
 
         Cursor cursor = db.rawQuery(query, new String[]{
                 "%" + departure + "%", "%" + destination + "%"

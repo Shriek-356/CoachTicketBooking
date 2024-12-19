@@ -32,11 +32,13 @@
         android:id="@+id/editTextDayMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="dd/MM/yy"
         android:drawableLeft="@drawable/baseline_date_range_24"
-        android:drawablePadding="7dp"/>
+        android:drawablePadding="7dp"
+        android:ems="10"
+        android:hint="dd/MM/yy"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <Button
         android:id="@+id/btnTimKiem"

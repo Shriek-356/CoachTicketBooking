@@ -31,16 +31,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi xuất phát"
         android:inputType="text"
-        android:hint="Nơi xuất phát" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi đến"
         android:inputType="text"
-        android:hint="Nơi đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,13 +52,15 @@
         android:orientation="horizontal">
 
         <EditText
-                android:id="@+id/editTextDepartureTime"
+            android:id="@+id/editTextDepartureTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Giờ đi"
             android:inputType="text"
-            android:hint="Giờ đi" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextDepartureDate"
@@ -62,8 +68,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Ngày đi"
             android:inputType="text"
-            android:hint="Ngày đi" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
     </LinearLayout>
 
     <Button
@@ -78,32 +86,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Hãng xe"
         android:inputType="text"
-        android:hint="Hãng xe" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextTotalSeat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Số chỗ ngồi"
         android:inputType="phone"
-        android:hint="Số chỗ ngồi" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextLicensePlate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Biển số xe"
         android:inputType="text"
-        android:hint="Biển số xe" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Loại xe"
         android:inputType="text"
-        android:hint="Loại xe" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <TextView
         android:id="@+id/textViewLuuY"

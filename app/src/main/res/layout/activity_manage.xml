@@ -90,6 +90,19 @@
             android:textSize="20dp"
             android:drawableRight="@drawable/baseline_arrow_forward_ios_24"/>
 
+        <Button
+            android:id="@+id/btnDangXuat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@android:drawable/editbox_background"
+            android:drawableLeft="@drawable/baseline_login_24"
+            android:drawableRight="@drawable/baseline_arrow_forward_ios_24"
+            android:drawablePadding="10dp"
+            android:gravity="start"
+            android:text="Đăng xuất"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
 </LinearLayout>

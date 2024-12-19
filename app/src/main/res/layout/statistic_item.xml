@@ -11,12 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Booking Date"
-        android:textSize="16sp"/>
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvTotalTickets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Tickets"
-        android:textSize="16sp"/>
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp" />
 </LinearLayout>

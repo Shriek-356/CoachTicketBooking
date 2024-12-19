@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Coach Brand"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -17,6 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Total Seat"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -24,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="License Plate"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <TextView
@@ -31,5 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Type"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 </LinearLayout>

@@ -74,6 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         .setMessage("Bạn có muốn xóa vé khỏi giỏ hàng không?")
                         .setPositiveButton("Đồng ý", (dialog, which) -> {
                             myDataBase.deleteTrippingCart(user.getUserID(), trippingCart.getTripID());
+                            dsTrippingCart.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged(); // Cập nhật lại RecyclerView
                             // Hiển thị thông báo xóa thành công

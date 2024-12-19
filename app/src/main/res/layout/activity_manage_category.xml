@@ -27,12 +27,14 @@
         android:textStyle="bold" />
 
     <EditText
-            android:id="@+id/editTextCoachID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Mã loại xe"
-            android:inputType="text" />
+        android:id="@+id/editTextCoachID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Mã loại xe"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
 
     <EditText
@@ -40,84 +42,105 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Bến xe xuất phát"
         android:inputType="text"
-        android:hint="Bến xe xuất phát" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextSecondLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Bến xe đến"
         android:inputType="text"
-        android:hint="Bến xe đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDeparture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi xuất phát"
         android:inputType="text"
-        android:hint="Nơi xuất phát" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi đến"
         android:inputType="text"
-        android:hint="Nơi đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDepartureTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Giờ đi"
         android:inputType="text"
-        android:hint="Giờ đi" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDepartureDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Ngày đi"
         android:inputType="text"
-        android:hint="Ngày đi" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestinationTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Giờ đến"
         android:inputType="text"
-        android:hint="Giờ đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestinationDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Ngày đến"
         android:inputType="text"
-        android:hint="Ngày đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextTicketAvailable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Số vé có sẵn"
         android:inputType="text"
-        android:hint="Số vé có sẵn" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Giá vé"
         android:inputType="text"
-        android:hint="Giá vé" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <Button
@@ -125,24 +148,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Thêm"
-            android:background="?attr/colorControlActivated"/>
+            android:background="?attr/colorControlActivated"
+            android:text="Thêm" />
 
         <Button
             android:id="@+id/btnSua"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sửa"
-            android:background="@color/cyan"/>
+            android:background="@color/cyan"
+            android:text="Sửa" />
 
         <Button
             android:id="@+id/btnXoa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Xóa"
-            android:background="@android:color/holo_red_light"/>
+            android:background="@android:color/holo_red_light"
+            android:text="Xóa" />
 
     </LinearLayout>
 

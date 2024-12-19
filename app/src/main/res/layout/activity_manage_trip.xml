@@ -31,16 +31,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi xuất phát"
         android:inputType="text"
-        android:hint="Nơi xuất phát" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Nơi đến"
         android:inputType="text"
-        android:hint="Nơi đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,8 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Giờ đi"
             android:inputType="text"
-            android:hint="Giờ đi" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextDepartureDate"
@@ -62,8 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Ngày đi"
             android:inputType="text"
-            android:hint="Ngày đi" />
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <Button
@@ -78,24 +85,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Mã loại xe"
         android:inputType="text"
-        android:hint="Mã loại xe" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextFirstLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Bến xe xuất phát"
         android:inputType="text"
-        android:hint="Bến xe xuất phát" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <EditText
         android:id="@+id/editTextSecondLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Bến xe đến"
         android:inputType="text"
-        android:hint="Bến xe đến" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,8 +121,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Giờ đến"
             android:inputType="text"
-            android:hint="Giờ đến" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextDestinationDate"
@@ -117,8 +132,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Ngày đến"
             android:inputType="text"
-            android:hint="Ngày đến" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -132,8 +149,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Số vé có sẵn"
             android:inputType="text"
-            android:hint="Số vé có sẵn" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <EditText
             android:id="@+id/editTextPrice"
@@ -141,8 +160,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="Giá vé"
             android:inputType="text"
-            android:hint="Giá vé" />
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
     </LinearLayout>
 
     <LinearLayout

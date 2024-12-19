@@ -27,12 +27,15 @@
         android:textStyle="bold" />
 
     <EditText
-            android:id="@+id/editTextDeparture"
+        android:id="@+id/editTextDeparture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nơi xuất phát"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textColorLink="@color/black" />
 
     <EditText
         android:id="@+id/editTextDestination"
@@ -40,7 +43,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nơi đến"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textColorLink="@color/black" />
 
     <Button
         android:id="@+id/btnTimKiem"

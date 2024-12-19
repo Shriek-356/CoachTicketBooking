@@ -50,6 +50,7 @@ public class TripBookingDetailsAdapter extends RecyclerView.Adapter<TripBookingD
 
         holder.txvLocation.setText("Vé xe từ " + departure + " đến " + destination);
         holder.txvFromTo.setText(departure +" -> " + destination);
+
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         holder.txvPrice.setText(numberFormat.format(tripBookingDetails.getPrice()));
 

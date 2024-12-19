@@ -20,6 +20,7 @@ import com.example.coachticketbookingapp.R;
 
 public class Manage extends AppCompatActivity {
     Button btnback, btnmanageuser, btnmanagecategory, btnmanagecoach, btnmanagetrip, btnmanageticket;
+    Button btnDangXuat;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,18 @@ public class Manage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(Manage.this, ManageTrip.class);
                 startActivity(intent);
+            }
+        });
+
+        btnDangXuat = findViewById(R.id.btnDangXuat2);
+
+        btnDangXuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Manage.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 

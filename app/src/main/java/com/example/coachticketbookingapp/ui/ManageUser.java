@@ -336,7 +336,7 @@ public class ManageUser extends AppCompatActivity {
         if ("user".equalsIgnoreCase(selectedUser.getRole())) {
             // Cập nhật
             String updateQuery = "UPDATE " + MyDataBase.tbUser + " SET "
-                    + MyDataBase.tbUser_Role + " = 'admin' "
+                    + MyDataBase.tbUser_Role + " = 'Admin' "
                     + "WHERE " + MyDataBase.tbUser_UserId + " = ?";
             db.execSQL(updateQuery, new Object[]{selectedUser.getUserId()});
 
